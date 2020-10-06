@@ -1,0 +1,50 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "bi-formular-engine": {
+      "projectType": "library",
+      "root": "projects/bi-formular-engine",
+      "sourceRoot": "projects/bi-formular-engine/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/bi-formular-engine/tsconfig.lib.json",
+            "project": "projects/bi-formular-engine/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/bi-formular-engine/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/bi-formular-engine/src/test.ts",
+            "tsConfig": "projects/bi-formular-engine/tsconfig.spec.json",
+            "karmaConfig": "projects/bi-formular-engine/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/bi-formular-engine/tsconfig.lib.json",
+              "projects/bi-formular-engine/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }},
+  "cli": {
+    "analytics": false
+  },
+  "defaultProject": "bi-formular-engine"
+}
