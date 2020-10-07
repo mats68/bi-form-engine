@@ -1,5 +1,4 @@
-import { SchemaManager } from '../../app/base/schemaManager';
-import { IComponent, ISchema, ComponentType, ButtonKind, Color } from '../../app/base/types';
+import { SchemaManager, IComponent, ISchema, ComponentType, ButtonKind, Color } from 'bi-formular-engine';
 
 export const buttons: Array<IComponent> = [
 {

@@ -1,6 +1,5 @@
-import { SchemaManager } from '../../app/base/schemaManager';
-import { ComponentType, IComponent, ISchema } from '../../app/base/types';
-import { buttons } from './schemaButtons';
+import { SchemaManager, ComponentType, IComponent, ISchema } from 'bi-formular-engine';
+//import { buttons } from './schemaButtons';
 
 const adress = (PrefField: string, disabled: boolean = false): Array<IComponent> => [
     {
@@ -8,7 +7,7 @@ const adress = (PrefField: string, disabled: boolean = false): Array<IComponent>
         field: PrefField + 'name',
         name: 'name',
         label: 'Name',
-        disabled
+        disabled,
     },
     {
         type: 'input',
@@ -151,25 +150,25 @@ export const schema_IA: ISchema =
                     label: 'Standort',
                     disabled: true,
                 },
-                {
-                    type: 'panel',
-                    styles: { container: 'display: flex;' },
-                    children: [
-                        {
-                            type: 'input',
-                            field: 'gemeinde',
-                            label: 'Gemeinde',
-                            disabled: true,
-                        },
-                        {
-                            type: 'input',
-                            field: 'Parzelle',
-                            label: 'Parzelle',
-                            width: '100px',
-                            disabled: true,
-                        },
-                    ]
-                },
+                // {
+                //     type: 'panel',
+                //     styles: { container: 'display: flex;' },
+                //     children: [
+                //         {
+                //             type: 'input',
+                //             field: 'gemeinde',
+                //             label: 'Gemeinde',
+                //             disabled: true,
+                //         },
+                //         {
+                //             type: 'input',
+                //             field: 'Parzelle',
+                //             label: 'Parzelle',
+                //             width: '100px',
+                //             disabled: true,
+                //         },
+                //     ]
+                // },
                 {
                     type: 'input',
                     field: 'VersicherungsNr',
@@ -186,7 +185,7 @@ export const schema_IA: ISchema =
                     field: 'anzEinheiten',
                     label: 'Anz. Einheiten / Zähler',
                     width: '100px',
-                    mask: '0*',
+                    // mask: '0*',
                 },
                 {
                     type: 'input',
@@ -383,7 +382,7 @@ export const schema_IA: ISchema =
                                     field: 'anzahl_v',
                                     label: 'Anzahl',
                                     dataType: 'int',
-                                    mask: '0*',
+                                    // mask: '0*',
                                 },
                                 {
                                     type: 'panel',
@@ -413,18 +412,18 @@ export const schema_IA: ISchema =
                                     label: 'Bezeichnung des Verbrauchers, Erzeugers, Speichers ',
                                     options: ['Beleuchtung', 'Kochherd mit Backofen', 'Kochherd ohne Backofen', 'Backofen', 'Geschirrspüler', 'Waschautomat', 'Waschautomat mit Zählerumschalter', 'Wäschetrockner', 'Boiler .... l, Aufheizzeit .... h', 'Motoren ohne Anschlussgesuch', 'Motoren mit Anschlussgesuch', 'Wärmepumpe ohne Anschlussgesuch', 'Wärmepumpe mit Anschlussgesuch', 'Apparat Netzrückwirkungen verursachend'],
                                 },
-                                {
-                                    type: 'date',
-                                    field: 'tag_date',
-                                    label: 'techn. Anschlussgesuch (TAG) vom',
-                                },
+                                // {
+                                //     type: 'date',
+                                //     field: 'tag_date',
+                                //     label: 'techn. Anschlussgesuch (TAG) vom',
+                                // },
                                 {
                                     type: 'input',
                                     field: 'anzahl',
                                     label: 'Leistung Bezug',
                                     tooltip: 'Leistung Bezug vom Netz [kVA]',
                                     dataType: 'float',
-                                    mask: '0*.0*',
+                                    // mask: '0*.0*',
                                 },
 
                             ]
@@ -432,7 +431,7 @@ export const schema_IA: ISchema =
                         {
                             type: 'input',
                             dataType: 'float',
-                            mask: '0*.0*',
+                            // mask: '0*.0*',
                             label: 'Leistung Total Bezug vom Netz',
                             field: 'LeistungBezugNetz',
                             disabled: true,
@@ -441,7 +440,7 @@ export const schema_IA: ISchema =
                         {
                             type: 'input',
                             dataType: 'float',
-                            mask: '0*.0*',
+                            // mask: '0*.0*',
                             label: 'Leistung Total Abgabe ans Netz',
                             field: 'LeistungAbgabeNetz',
                             disabled: true,
@@ -450,7 +449,7 @@ export const schema_IA: ISchema =
                         {
                             type: 'input',
                             dataType: 'float',
-                            mask: '0*.0*',
+                            // mask: '0*.0*',
                             label: 'Voraussichtliche Maximalbelastung Total',
                             field: 'LeistungMaximalbelastungNetz',
                             suffix: 'kVA',

@@ -1,7 +1,1 @@
-<div style="text-align:center; padding: 20px;">
-  <lib-counter-button (countChanged)="handleCountChanged($event)"></lib-counter-button>
-  <div>The current count is {{currentCount}}!</div>
-</div>
-
-
-<vs-form [schema]='{ type: "expansionspanel", label: "Thaler", children: [{type: "button", label: "thaler"}]}'></vs-form>
+<vs-form [schema]='schema' [values]='values'></vs-form>

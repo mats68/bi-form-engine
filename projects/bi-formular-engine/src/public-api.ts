@@ -3,5 +3,6 @@
  */
 
 export * from './lib/bi-form-module.module';
-export * from './lib/counter-button/counter-button.component';
+export * from './lib/base/schemaManager';
+export * from './lib/base/types';
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {schema_IA, values_IA } from './schema/schema_IA';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  currentCount = 0;
+  schema =  schema_IA;
+  values = values_IA;
 
-  handleCountChanged(e) {
-    this.currentCount = e;
-  }
+
 }
