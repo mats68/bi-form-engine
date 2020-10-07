@@ -2,3 +2,6 @@
   <lib-counter-button (countChanged)="handleCountChanged($event)"></lib-counter-button>
   <div>The current count is {{currentCount}}!</div>
 </div>
+
+
+<vs-form [schema]='{ type: "expansionspanel", label: "Thaler", children: [{type: "button", label: "thaler"}]}'></vs-form>

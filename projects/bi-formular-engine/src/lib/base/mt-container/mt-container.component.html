@@ -1,0 +1,18 @@
+<ng-container *ngIf='!comp.noLayout'>
+  <div *ngIf='usesGrid' class="row">
+    <div *ngFor='let child of comp.children' [class]="sm.getColsClass(child) + getHighlight(child)">
+      <mt-item [comp]='child' [sm]='sm'></mt-item>
+    </div>
+  </div>
+
+  <div *ngIf='!usesGrid' [style]='styles("container")'>
+    <div *ngFor='let child of comp.children' [class]='getHighlight(child)' [style]='styles("item", child)'>
+      <mt-item [comp]='child' [sm]='sm'></mt-item>
+    </div>
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf='comp.noLayout'>
+  <mt-item *ngFor='let child of comp.children' [comp]='child' [sm]='sm'></mt-item>
+</ng-container>

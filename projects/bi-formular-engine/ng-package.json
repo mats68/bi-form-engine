@@ -3,5 +3,14 @@
   "dest": "../../dist/bi-formular-engine",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "tslib",
+    "lodash.clonedeep",
+    "lodash.get",
+    "lodash.merge",
+    "lodash.set",
+    "ngx-mask"
+
+  ]
 }
