@@ -5,9 +5,9 @@ import { FormControl } from '@angular/forms';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
-import * as moment_ from 'moment';
-const moment = moment_;
-//import * as moment from 'moment';
+// import * as moment_ from 'moment';
+// const moment = moment_;
+import * as moment from 'moment';
 
 export const MY_FORMATS = {
   parse: {

@@ -412,11 +412,11 @@ export const schema_IA: ISchema =
                                     label: 'Bezeichnung des Verbrauchers, Erzeugers, Speichers ',
                                     options: ['Beleuchtung', 'Kochherd mit Backofen', 'Kochherd ohne Backofen', 'Backofen', 'Geschirrspüler', 'Waschautomat', 'Waschautomat mit Zählerumschalter', 'Wäschetrockner', 'Boiler .... l, Aufheizzeit .... h', 'Motoren ohne Anschlussgesuch', 'Motoren mit Anschlussgesuch', 'Wärmepumpe ohne Anschlussgesuch', 'Wärmepumpe mit Anschlussgesuch', 'Apparat Netzrückwirkungen verursachend'],
                                 },
-                                // {
-                                //     type: 'date',
-                                //     field: 'tag_date',
-                                //     label: 'techn. Anschlussgesuch (TAG) vom',
-                                // },
+                                {
+                                    type: 'date',
+                                    field: 'tag_date',
+                                    label: 'techn. Anschlussgesuch (TAG) vom',
+                                },
                                 {
                                     type: 'input',
                                     field: 'anzahl',
