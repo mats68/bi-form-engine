@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'bi-form-engine';
+  title = 'app';
+  currentCount = 0;
+
+  handleCountChanged(e) {
+    this.currentCount = e;
+  }
 }

@@ -3,7 +3,10 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+    "paths": {
+      "bi-formular-engine": ["dist/bi-formular-engine"]
+    }
   },
   "files": [
     "src/main.ts",
