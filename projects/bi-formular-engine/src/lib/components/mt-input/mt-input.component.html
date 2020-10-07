@@ -2,8 +2,6 @@
   <mat-label [ngClass]='{"error-color" : getError()}'>{{label}}</mat-label>
   <span matPrefix *ngIf='comp.prefix'>{{comp.prefix}}</span>
   <input *ngIf='Typ === inpTyp.normal'
-    [mask]='comp.mask' [thousandSeparator]='maskOptions.thousandSeparator'
-    [dropSpecialCharacters]='maskOptions.dropSpecialCharacters' [showMaskTyped]='maskOptions.showMaskTyped'
     matInput #name [(ngModel)]='Value' (blur)='onBlur()'
     [type]='comp.inputType'
     [minlength]='comp.min'
