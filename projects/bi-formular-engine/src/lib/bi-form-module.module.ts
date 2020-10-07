@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -112,6 +112,8 @@ import { CounterButtonComponent } from './counter-button/counter-button.componen
   ],
   imports: [
     CommonModule,
+    FormsModule, 
+    ReactiveFormsModule,
     MatInputModule,
     MatCardModule,
     MatCheckboxModule,

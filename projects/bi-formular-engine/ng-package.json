@@ -2,7 +2,16 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/bi-formular-engine",
   "lib": {
-    "entryFile": "src/public-api.ts"
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "lodash.get" : "get",
+      "lodash.set" : "set",
+      "lodash.clonedeep" : "clonedeep",
+      "lodash.merge" : "merge",
+      "moment" : "moment",
+      "ngx-mask": "ngxMask"
+
+    }
   },
   "whitelistedNonPeerDependencies": [
     "tslib",
@@ -11,6 +20,5 @@
     "lodash.merge",
     "lodash.set",
     "ngx-mask"
-
   ]
 }

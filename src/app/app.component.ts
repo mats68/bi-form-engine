@@ -11,5 +11,10 @@ export class AppComponent {
   schema =  schema_IA;
   values = values_IA;
 
+  getValues() {
+    return JSON.stringify(this.values, null, 2);
+
+  }  
+
 
 }
