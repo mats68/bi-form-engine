@@ -6,3 +6,4 @@ export * from './lib/bi-form-module.module';
 export * from './lib/base/schemaManager';
 export * from './lib/base/types';
 
+export * from './lib/base/vs-form/vs-form.component';
