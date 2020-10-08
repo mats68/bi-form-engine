@@ -3,7 +3,7 @@ import { ISchema } from '../../base/types';
 import { SchemaManager, ISettings } from '../../base/schemaManager';
 
 @Component({
-  selector: 'vs-form',
+  selector: 'bi-form',
   templateUrl: './vs-form.component.html',
   styleUrls: ['./vs-form.component.scss'],
   host: {

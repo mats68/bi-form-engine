@@ -57,12 +57,8 @@ import { MtDateComponent } from './components/mt-date/mt-date.component';
 import { MtIconComponent } from './components/mt-icon/mt-icon.component';
 import { MtSliderComponent } from './components/mt-slider/mt-slider.component';
 import { MtSidenavComponent } from './components/mt-sidenav/mt-sidenav.component';
-// import { ComponentType, IComponent, ISchema } from './base/types';
-
 
 import { NgxMaskModule, IConfig } from 'ngx-mask';
-
-
 
 // const maskConfig: Partial<IConfig> = {
 //   dropSpecialCharacters: false,
@@ -73,14 +69,8 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 // const ngxMaskModule = NgxMaskModule.forRoot(maskConfig);
 
 
-
-import { CounterButtonComponent } from './counter-button/counter-button.component';
-
-
-
 @NgModule({
   declarations: [
-    CounterButtonComponent,
     MtInputComponent,
     MtCheckboxComponent,
     MtItemComponent,
@@ -150,11 +140,7 @@ import { CounterButtonComponent } from './counter-button/counter-button.componen
     NgxMaskModule,
   ],
   exports: [
-    CounterButtonComponent,
     VsFormComponent,
-    // ComponentType,
-    // ComponentType, 
-    // IComponent, ISchema
 
   ]
 })
