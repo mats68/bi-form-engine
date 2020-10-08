@@ -51,7 +51,7 @@ export interface IComponentPartial extends IComponentProps {
 export interface IComponentProps {
     dataType?: keyof typeof DataType;
     label?: string | IComponentStringFunction,
-    name?: string;
+    name?: string,
     field?: string,
     style?: string | IComponentStringFunction,
     styles?: any,
@@ -101,6 +101,7 @@ export interface IComponentProps {
     openInNewTab?: boolean,
     menu?: Array<IComponent>;
     navpos?: 'left' | 'right',
+    id?: string,
     parentComp?: IComponent,
   }
 
@@ -160,6 +161,7 @@ export const ComponentKeys: KeysEnum<IComponent> = {
   openInNewTab: true,
   menu: true,
   navpos: true,
+  id: true,
   parentComp: true,
 };
 
