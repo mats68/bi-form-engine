@@ -8,8 +8,7 @@
       "lodash.set" : "set",
       "lodash.clonedeep" : "clonedeep",
       "lodash.merge" : "merge",
-      "moment" : "moment",
-      "ngx-mask": "ngxMask"
+      "moment" : "moment"
 
     }
   },
@@ -18,7 +17,6 @@
     "lodash.clonedeep",
     "lodash.get",
     "lodash.merge",
-    "lodash.set",
-    "ngx-mask"
+    "lodash.set"
   ]
 }

@@ -28,7 +28,6 @@
     "lodash.merge": "^4.6.2",
     "lodash.set": "^4.3.2",
     "moment": "^2.29.1",
-    "ngx-mask": "^10.0.4",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

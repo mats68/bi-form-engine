@@ -58,7 +58,7 @@ import { MtIconComponent } from './components/mt-icon/mt-icon.component';
 import { MtSliderComponent } from './components/mt-slider/mt-slider.component';
 import { MtSidenavComponent } from './components/mt-sidenav/mt-sidenav.component';
 
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+// import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 // const maskConfig: Partial<IConfig> = {
 //   dropSpecialCharacters: false,
@@ -136,8 +136,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    OverlayModule,
-    NgxMaskModule,
+    OverlayModule
   ],
   exports: [
     VsFormComponent,
