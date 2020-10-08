@@ -1,5 +1,5 @@
 {
-  "name": "bi-formular-engine",
+  "name": "@next-gen/formular-engine",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^10.0.14",
@@ -14,5 +14,8 @@
     "lodash.get": "^4.4.2",
     "lodash.merge": "^4.6.2",
     "lodash.set": "^4.3.2"
+  },
+  "publishConfig": {
+    "@next-gen:registry": "https://srv-git01.brunnerinfo.local/api/v4/projects/16/packages/npm/"
   }
 }

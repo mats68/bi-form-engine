@@ -158,6 +158,7 @@ export const schema_IA: ISchema =
                             type: 'input',
                             field: 'gemeinde',
                             label: 'Gemeinde',
+                            id: 'gemeinde',
                             disabled: true,
                         },
                         {

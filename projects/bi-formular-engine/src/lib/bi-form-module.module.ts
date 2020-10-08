@@ -79,7 +79,6 @@ import { MtSidenavComponent } from './components/mt-sidenav/mt-sidenav.component
     MtBtnComponent,
     MtDividerComponent,
     MtContainerComponent,
-    VsFormComponent,
     MtToolbarComponent,
     MtDatatableComponent,
     MtErrorpanelComponent,

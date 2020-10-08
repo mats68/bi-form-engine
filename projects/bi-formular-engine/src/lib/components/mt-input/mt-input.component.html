@@ -3,6 +3,7 @@
   <span matPrefix *ngIf='comp.prefix'>{{comp.prefix}}</span>
   <input *ngIf='Typ === inpTyp.normal'
     matInput #name [(ngModel)]='Value' (blur)='onBlur()'
+    [id]='comp.id'
     [type]='comp.inputType'
     [minlength]='comp.min'
     [maxlength]='comp.max'
