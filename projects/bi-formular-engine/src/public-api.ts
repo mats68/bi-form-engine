@@ -2,6 +2,7 @@
  * Public API Surface of bi-formular-engine
  */
 
-export * from './lib/bi-formular-engine.service';
-export * from './lib/bi-formular-engine.component';
-export * from './lib/bi-formular-engine.module';
+export * from './lib/bi-form-module.module';
+export * from './lib/base/schemaManager';
+export * from './lib/base/types';
+

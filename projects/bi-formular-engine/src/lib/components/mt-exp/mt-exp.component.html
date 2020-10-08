@@ -1,0 +1,14 @@
+<mat-expansion-panel
+    class="exp-panel" [style]='style' [expanded]='comp.expanded'
+    [disabled]='disabled'
+    (afterExpand)='afterExpand()' (afterCollapse)='afterCollapse()'>
+    <div #name tabindex="1"></div>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{label}}
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mt-container [comp]='comp' [sm]='sm'></mt-container>
+
+</mat-expansion-panel>

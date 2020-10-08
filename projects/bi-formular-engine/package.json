@@ -3,9 +3,17 @@
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^10.0.14",
-    "@angular/core": "^10.0.14"
+    "@angular/core": "^10.0.14",
+    "@angular/material": "^10.2.4",
+    "@angular/material-moment-adapter": "^10.2.4",
+    "moment": "^2.29.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.get": "^4.4.2",
+    "lodash.merge": "^4.6.2",
+    "lodash.set": "^4.3.2",
+    "ngx-mask": "^10.0.4"
   }
 }

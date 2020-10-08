@@ -8,6 +8,12 @@
   "files": [],
   "references": [
     {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    },
+    {
       "path": "./projects/bi-formular-engine/tsconfig.lib.json"
     },
     {
