@@ -9,7 +9,7 @@ export type IComponentVoidFunction = (sm: SchemaManager, comp: IComponent, value
 export type ISchemaVoidFunction = (sm: SchemaManager) => void;
 export type ISelectOptionItemsFunction = (sm: SchemaManager, comp: IComponent, value?: any) => ISelectOptionItems | string[];
 
-export type ISummaryFunction = (sm: SchemaManager, comp: IComponent, row: any, field?: string, arrayInd?: number) => string | IComponent;
+export type ISummaryFunction = (sm: SchemaManager, comp: IComponent, row?: any, field?: string, arrayInd?: number) => any;
 
 
 

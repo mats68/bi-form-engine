@@ -121,27 +121,31 @@ export class MtDatatableComponent extends MtBaseComponent implements OnInit, OnC
   }
 
   summaryCard(row: any): any {
-    const summary: any = this.comp.summaryCard;
-    if (!summary) return 'no summaryCard function!';
-    return summary(this.sm, this.comp, row);
-
+    if (!this.comp.summaryCard) return 'no summaryCard function!';
+    return this.comp.summaryCard(this.sm, this.comp, row);
   }
 
   summaryTitle(field: IComponent): any {
-    const summaryTitleCell: ISummaryFunction = this.comp.summaryTitleCell;
-    if (!summaryTitleCell) {
-      return this.sm.getLabel(field);
+    let ret;
+    if (this.comp.summaryTitleCell) {
+      ret = this.comp.summaryTitleCell(this.sm, this.comp, null, field.field);
     }
-    return summaryTitleCell(this.sm, this.comp, null, field.field);
+    
+    if (this.sm.checkValueType(ret) === IValueType.undefined) {
+      ret = this.sm.getLabel(field);
+    }
+    return ret;
   }
 
   summaryCell(field: IComponent, arrayInd: number): any {
-    const summaryCell: ISummaryFunction = this.comp.summaryCell;
-    if (!summaryCell) {
-      return this.sm.getValue(field, this.sm.Values, arrayInd);
-    } else {
-      return summaryCell(this.sm, this.comp, null, field.field, arrayInd);
+    let ret;
+    if (this.comp.summaryCell) {
+      ret = this.comp.summaryCell(this.sm, this.comp, null, field.field, arrayInd);
     }
+    if (this.sm.checkValueType(ret) === IValueType.undefined) {
+      ret = this.sm.getValue(field, this.sm.Values, arrayInd);
+    }
+    return ret;
   }
 
   hasCurRow(): boolean {
