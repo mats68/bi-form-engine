@@ -8,7 +8,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "b": "ng build bi-formular-engine --prod"
+    "l": "cd dist/bi-formular-engine && npm link",
+    "b": "ng build bi-formular-engine --prod",
+    "w": "ng build bi-formular-engine --watch"
   },
   "private": true,
   "dependencies": {

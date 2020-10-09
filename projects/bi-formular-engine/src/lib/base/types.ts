@@ -1,5 +1,6 @@
 import { SchemaManager } from './schemaManager';
 
+
 export type IComponentStringFunction = (sm: SchemaManager, comp: IComponent, value?: any) => string;
 export type IComponentBoolFunction = (sm: SchemaManager, comp: IComponent, value?: any) => boolean;
 export type IComponentComponentFunction = (sm: SchemaManager, comp: IComponent, value?: any) => IComponent;
@@ -7,8 +8,9 @@ export type IComponentAnyFunction = (sm: SchemaManager, comp: IComponent, value?
 export type IComponentVoidFunction = (sm: SchemaManager, comp: IComponent, value?: any) => void;
 export type ISchemaVoidFunction = (sm: SchemaManager) => void;
 export type ISelectOptionItemsFunction = (sm: SchemaManager, comp: IComponent, value?: any) => ISelectOptionItems | string[];
-// export type IPartialSchema = Partial<ISchema>;
-// export type IPartialComponent = Partial<IComponent>;
+
+export type ISummaryFunction = (sm: SchemaManager, comp: IComponent, row: any, field?: string, arrayInd?: number) => string | IComponent;
+
 
 
 export type IScreenSize = 'xs' | 'sm' | 'md' | 'lg';
@@ -79,8 +81,13 @@ export interface IComponentProps {
     multiselect?: boolean, 
     validate?: IComponentStringFunction,
     onChange?: IComponentVoidFunction,
-    summary?: IComponentStringFunction | IComponentComponentFunction,
+    summaryCard?: ISummaryFunction,
+    summaryTitleCell?: ISummaryFunction,
+    summaryCell?: ISummaryFunction,
+    columns?: string[],
+    cardView?: boolean,
     dragdrop?: boolean,
+
     onClick?: IComponentVoidFunction,
     disabled?: boolean | IComponentBoolFunction,
     options?: ISelectOptionItems | ISelectOptionItemsFunction | string[],
@@ -93,7 +100,6 @@ export interface IComponentProps {
     expanded?: boolean,
     toolbarColor?: Color,
     menuView?: boolean,
-    cardView?: boolean,
     noLayout?: boolean, 
     selectedTabIndex?: number,
     html?: string | IComponentStringFunction,
@@ -139,7 +145,10 @@ export const ComponentKeys: KeysEnum<IComponent> = {
   color: true,
   validate: true,
   onChange: true,
-  summary: true,
+  summaryCard: true,
+  summaryTitleCell: true,
+  summaryCell: true,
+  columns:true,
   dragdrop: true,
   onClick: true,
   disabled: true,

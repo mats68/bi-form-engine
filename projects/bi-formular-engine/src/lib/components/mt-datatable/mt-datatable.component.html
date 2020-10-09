@@ -4,7 +4,7 @@
         [class]='sm.getColsClass(comp, "datacols") + " card"' cdkDrag [cdkDragDisabled]="!comp.dragdrop">
         <div class="menu" (click)='toggleExpand(row)'>
             <div>
-                <mt-item [comp]='summary(row)' [sm]='sm'></mt-item>
+                <mt-item [comp]='summaryCard(row)' [sm]='sm'></mt-item>
             </div>
             <span class="menu-spacer"></span>
             <button mat-icon-button
@@ -21,13 +21,14 @@
     <table class="mat-table mat-elevation-z8 table">
         <tbody>
             <tr class="mat-row table-row table-header-row">
-                <td class="mat-cell table-cell" *ngFor='let cap of captions' [style]='getCellStyle(0)'>{{cap}}</td>
+                <td class="mat-cell table-cell" *ngFor='let field of fields' [style]='getCellStyle(0)'>
+                    <mt-item [comp]='summaryTitle(field)' [sm]='sm'></mt-item>
                 <td class="mat-cell" [style]='getCellStyle(0)'></td>
             </tr>
             <ng-container *ngFor="let row of data; let ind = index">
                 <tr class="mat-row table-row" (click)='toggleExpand(row)' cdkDrag [cdkDragDisabled]="!comp.dragdrop">
-                    <td class="mat-cell table-cell" *ngFor='let feld of fields' [style]='getCellStyle(ind)'>
-                        {{getCellValue(feld,ind)}}
+                    <td class="mat-cell table-cell" *ngFor='let field of fields' [style]='getCellStyle(ind)'>
+                        <mt-item [comp]='summaryCell(field, ind)' [sm]='sm'></mt-item>
                     </td>
                     <td class="mat-cell" [style]='getCellStyle(ind) + "width: 20px;"'>
                         <button mat-icon-button

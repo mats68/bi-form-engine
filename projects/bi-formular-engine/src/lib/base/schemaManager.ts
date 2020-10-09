@@ -687,7 +687,7 @@ export class SchemaManager {
         if (noLabels.indexOf(c.type as ComponentType) === -1 && (this.checkValueType(c.label) === IValueType.undefined)) AddErr(c, noLabel, false);
 
         if ((c.type === ComponentType.select || c.type === ComponentType.radiogroup) && !c.options) AddErr(c, noOptions, true);
-        if (c.type === ComponentType.datatable && c.cardView && !c.summary) AddErr(c, noSummary, true);
+        if (c.type === ComponentType.datatable && c.cardView && !c.summaryCard) AddErr(c, noSummary, true);
         if ((c.type === ComponentType.icon) && !c.icon) AddErr(c, noIcon, true);
       }
 

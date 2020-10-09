@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { IValueType, SchemaManager } from '../../base/schemaManager';
-import { IComponent } from '../../base/types';
+import { IComponent, ISummaryFunction } from '../../base/types';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'mt-datatable',
@@ -13,21 +13,28 @@ export class MtDatatableComponent implements OnInit, OnChanges {
   @Input() curRowInd: number;
   @Input() data: any;
   currow: any;
-  captions: string[];
 
   fields: IComponent[];
   toolbar: IComponent;
-  
+
   constructor() { }
 
   ngOnInit(): void {
-    this.fields = this.comp.children.filter(c => c.field);
-    this.captions = this.fields.map(c => {
-      const lb = this.sm.getPropValue(c, 'label');
-      return lb || 'no label specified!';
-    })
+    this.fields = [];
 
-    
+    if (this.comp.columns) {
+      this.comp.columns.forEach(s => {
+        const c = this.sm.getCompByField(s);
+        if (c) this.fields.push(c);
+      });
+    } else {
+      this.sm.traverseSchema(c => {
+        if (c.field && c.type !== 'datatable') this.fields.push(c);
+      }, null, this.comp);
+    }
+
+    console.log('fields', this.fields);
+
     this.toolbar = {
       type: 'toolbar',
       label: this.comp.label,
@@ -75,8 +82,8 @@ export class MtDatatableComponent implements OnInit, OnChanges {
     const row = {};
     const len = this.data.push(row);
     this.sm.updateValue(this.comp, this.data);
-    this.sm.InitValuesArray(this.comp, this.data[len-1]);
-    this.InitCurRow(len-1);
+    this.sm.InitValuesArray(this.comp, this.data[len - 1]);
+    this.InitCurRow(len - 1);
   }
 
   CopyRow(): void {
@@ -84,7 +91,7 @@ export class MtDatatableComponent implements OnInit, OnChanges {
     const newrow = JSON.parse(JSON.stringify(this.currow));
     const len = this.data.push(newrow);
     this.sm.updateValue(this.comp, this.data);
-    this.InitCurRow(len-1);
+    this.InitCurRow(len - 1);
   }
 
   DeleteRow(): void {
@@ -101,7 +108,7 @@ export class MtDatatableComponent implements OnInit, OnChanges {
 
   toggleExpand(row: any) {
     let ind = this.data.findIndex(r => r === row);
-    if (this.comp.curRowInd === ind) ind = -1; 
+    if (this.comp.curRowInd === ind) ind = -1;
     this.InitCurRow(ind);
   }
 
@@ -116,20 +123,51 @@ export class MtDatatableComponent implements OnInit, OnChanges {
     }
   }
 
-
-  summary(row: any): IComponent {
-    const summary: any = this.comp.summary;
+  summaryCard(row: any): IComponent {
+    const summary: any = this.comp.summaryCard;
+    if (!summary) return this.labelComp('no summaryCard function!');
     const ret = summary(this.sm, this.comp, row);
+    return this.updateSummaryReturnValue(ret);
+
+  }
+
+  summaryTitle(field: IComponent): IComponent {
+    const summaryTitleCell: ISummaryFunction = this.comp.summaryTitleCell;
+    if (!summaryTitleCell) {
+      const l = this.sm.getLabel(field)
+      return this.labelComp(l || 'no label specified');
+    }
+    const ret = summaryTitleCell(this.sm, this.comp, null, field.field);
+    return this.updateSummaryReturnValue(ret);
+  }
+
+  summaryCell(field: IComponent, arrayInd: number): IComponent {
+    const summaryCell: ISummaryFunction = this.comp.summaryCell;
+    let ret;
+    if (!summaryCell) {
+      ret = this.sm.getValue(field, this.sm.Values, arrayInd);
+    } else {
+      ret = summaryCell(this.sm, this.comp, null, field.field, arrayInd);
+    }
+    return this.updateSummaryReturnValue(ret);
+  }
+
+  updateSummaryReturnValue(ret: string | IComponent): IComponent {
     const typ: IValueType = this.sm.checkValueType(ret);
     if (typ === IValueType.string) {
-      return {
-        type: 'label',
-        label: ret
-      }
+      return this.labelComp(ret as string);
     } else if (typ === IValueType.component) {
-      return ret;
+      return ret as IComponent;
     } else {
       console.error('summary function must return a string or a component', this.comp);
+    }
+  }
+
+
+  labelComp(label: string): IComponent {
+    return {
+      type: 'label',
+      label
     }
   }
 
@@ -146,14 +184,14 @@ export class MtDatatableComponent implements OnInit, OnChanges {
     return has;
   }
 
-  getCellValue(comp: IComponent, arrayInd: number): string {
-    return this.sm.getValue(comp,this.sm.Values,arrayInd);
-  }
 
   getCellStyle(ind: number) {
     if (ind < this.data.length - 1) {
       return 'border-bottom-style: solid;border-bottom-width: thin;border-spacing: 0;';
+    } else {
+      return '';
     }
+
   }
 
   drop(event: CdkDragDrop<string[]>) {
