@@ -4,12 +4,12 @@ import { SchemaManager, ISettings } from '../../base/schemaManager';
 
 @Component({
   selector: 'bi-form',
-  templateUrl: './vs-form.component.html',
-  styleUrls: ['./vs-form.component.scss'],
+  templateUrl: './bi-form.component.html',
+  styleUrls: ['./bi-form.component.scss'],
   host: {
     '(window:resize)': 'onResize($event)'
   }})
-export class VsFormComponent implements OnInit, OnChanges {
+export class BiFormComponent implements OnInit, OnChanges {
   @Input() schema: ISchema;
   @Input() values: any;
   @Input() settings: ISettings;

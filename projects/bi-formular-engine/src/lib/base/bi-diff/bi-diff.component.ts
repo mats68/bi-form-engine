@@ -3,11 +3,11 @@ import { ISchema } from '../../base/types';
 import { SchemaManager, ISettings } from '../../base/schemaManager';
 
 @Component({
-  selector: 'vs-diff',
-  templateUrl: './vs-diff.component.html',
-  styleUrls: ['./vs-diff.component.scss']
+  selector: 'bi-diff',
+  templateUrl: './bi-diff.component.html',
+  styleUrls: ['./bi-diff.component.scss']
 })
-export class VsDiffComponent implements OnInit {
+export class BiDiffComponent implements OnInit {
   @Input() schema: ISchema;
   @Input() values1: any;
   @Input() values2: any;

@@ -38,7 +38,6 @@ import { MtExpComponent } from './components/mt-exp/mt-exp.component';
 import { MtBtnComponent } from './components/mt-btn/mt-btn.component';
 import { MtDividerComponent } from './components/mt-divider/mt-divider.component';
 import { MtContainerComponent } from './base/mt-container/mt-container.component';
-import { VsFormComponent } from './base/vs-form/vs-form.component';
 import { MtToolbarComponent } from './components/mt-toolbar/mt-toolbar.component';
 import { MtDatatableComponent } from './components/mt-datatable/mt-datatable.component';
 import { MtErrorpanelComponent } from './components/mt-errorpanel/mt-errorpanel.component';
@@ -47,7 +46,6 @@ import { MtRadioComponent } from './components/mt-radio/mt-radio.component';
 import { MtLblComponent } from './components/mt-lbl/mt-lbl.component';
 import { MtPanelComponent } from './components/mt-panel/mt-panel.component';
 import { MtCardComponent } from './components/mt-card/mt-card.component';
-import { VsDiffComponent } from './base/vs-diff/vs-diff.component';
 import { MtHtmlComponent } from './components/mt-html/mt-html.component';
 import { MtBaseComponent } from './base/mt-base/mt-base.component';
 import { MtLinkComponent } from './components/mt-link/mt-link.component';
@@ -57,17 +55,8 @@ import { MtDateComponent } from './components/mt-date/mt-date.component';
 import { MtIconComponent } from './components/mt-icon/mt-icon.component';
 import { MtSliderComponent } from './components/mt-slider/mt-slider.component';
 import { MtSidenavComponent } from './components/mt-sidenav/mt-sidenav.component';
-
-// import { NgxMaskModule, IConfig } from 'ngx-mask';
-
-// const maskConfig: Partial<IConfig> = {
-//   dropSpecialCharacters: false,
-//   validation: false,
-//   thousandSeparator: "'",
-// };
-
-// const ngxMaskModule = NgxMaskModule.forRoot(maskConfig);
-
+import { BiDiffComponent } from './base/bi-diff/bi-diff.component';
+import { BiFormComponent } from './base/bi-form/bi-form.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +76,7 @@ import { MtSidenavComponent } from './components/mt-sidenav/mt-sidenav.component
     MtLblComponent,
     MtPanelComponent,
     MtCardComponent,
-    VsDiffComponent,
+    BiDiffComponent,
     MtHtmlComponent,
     MtBaseComponent,
     MtLinkComponent,
@@ -97,7 +86,7 @@ import { MtSidenavComponent } from './components/mt-sidenav/mt-sidenav.component
     MtIconComponent,
     MtSliderComponent,
     MtSidenavComponent,
-    VsFormComponent,
+    BiFormComponent,
   ],
   imports: [
     CommonModule,
@@ -138,8 +127,7 @@ import { MtSidenavComponent } from './components/mt-sidenav/mt-sidenav.component
     OverlayModule
   ],
   exports: [
-    VsFormComponent,
-
+    BiFormComponent,
   ]
 })
 export class BiFormModuleModule { }

@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "bl": "ng build bi-formular-engine --prod"
+    "b": "ng build bi-formular-engine --prod"
   },
   "private": true,
   "dependencies": {
