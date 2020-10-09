@@ -55,6 +55,7 @@ import { MtDateComponent } from './components/mt-date/mt-date.component';
 import { MtIconComponent } from './components/mt-icon/mt-icon.component';
 import { MtSliderComponent } from './components/mt-slider/mt-slider.component';
 import { MtSidenavComponent } from './components/mt-sidenav/mt-sidenav.component';
+import { MtItemOrTextComponent } from './base/mt-item-or-text/mt-item-or-text.component';
 import { BiDiffComponent } from './base/bi-diff/bi-diff.component';
 import { BiFormComponent } from './base/bi-form/bi-form.component';
 
@@ -86,6 +87,7 @@ import { BiFormComponent } from './base/bi-form/bi-form.component';
     MtIconComponent,
     MtSliderComponent,
     MtSidenavComponent,
+    MtItemOrTextComponent,
     BiFormComponent,
   ],
   imports: [

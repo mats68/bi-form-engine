@@ -2,22 +2,21 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { IValueType, SchemaManager } from '../../base/schemaManager';
 import { IComponent, ISummaryFunction } from '../../base/types';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MtBaseComponent } from '../../base/mt-base/mt-base.component';
+
+
 @Component({
   selector: 'mt-datatable',
   templateUrl: './mt-datatable.component.html',
   styleUrls: ['./mt-datatable.component.scss']
 })
-export class MtDatatableComponent implements OnInit, OnChanges {
-  @Input() sm: SchemaManager;
-  @Input() comp: IComponent;
+export class MtDatatableComponent extends MtBaseComponent implements OnInit, OnChanges {
   @Input() curRowInd: number;
   @Input() data: any;
   currow: any;
 
   fields: IComponent[];
   toolbar: IComponent;
-
-  constructor() { }
 
   ngOnInit(): void {
     this.fields = [];
@@ -32,8 +31,6 @@ export class MtDatatableComponent implements OnInit, OnChanges {
         if (c.field && c.type !== 'datatable') this.fields.push(c);
       }, null, this.comp);
     }
-
-    console.log('fields', this.fields);
 
     this.toolbar = {
       type: 'toolbar',
@@ -123,51 +120,27 @@ export class MtDatatableComponent implements OnInit, OnChanges {
     }
   }
 
-  summaryCard(row: any): IComponent {
+  summaryCard(row: any): any {
     const summary: any = this.comp.summaryCard;
-    if (!summary) return this.labelComp('no summaryCard function!');
-    const ret = summary(this.sm, this.comp, row);
-    return this.updateSummaryReturnValue(ret);
+    if (!summary) return 'no summaryCard function!';
+    return summary(this.sm, this.comp, row);
 
   }
 
-  summaryTitle(field: IComponent): IComponent {
+  summaryTitle(field: IComponent): any {
     const summaryTitleCell: ISummaryFunction = this.comp.summaryTitleCell;
     if (!summaryTitleCell) {
-      const l = this.sm.getLabel(field)
-      return this.labelComp(l || 'no label specified');
+      return this.sm.getLabel(field);
     }
-    const ret = summaryTitleCell(this.sm, this.comp, null, field.field);
-    return this.updateSummaryReturnValue(ret);
+    return summaryTitleCell(this.sm, this.comp, null, field.field);
   }
 
-  summaryCell(field: IComponent, arrayInd: number): IComponent {
+  summaryCell(field: IComponent, arrayInd: number): any {
     const summaryCell: ISummaryFunction = this.comp.summaryCell;
-    let ret;
     if (!summaryCell) {
-      ret = this.sm.getValue(field, this.sm.Values, arrayInd);
+      return this.sm.getValue(field, this.sm.Values, arrayInd);
     } else {
-      ret = summaryCell(this.sm, this.comp, null, field.field, arrayInd);
-    }
-    return this.updateSummaryReturnValue(ret);
-  }
-
-  updateSummaryReturnValue(ret: string | IComponent): IComponent {
-    const typ: IValueType = this.sm.checkValueType(ret);
-    if (typ === IValueType.string) {
-      return this.labelComp(ret as string);
-    } else if (typ === IValueType.component) {
-      return ret as IComponent;
-    } else {
-      console.error('summary function must return a string or a component', this.comp);
-    }
-  }
-
-
-  labelComp(label: string): IComponent {
-    return {
-      type: 'label',
-      label
+      return summaryCell(this.sm, this.comp, null, field.field, arrayInd);
     }
   }
 
