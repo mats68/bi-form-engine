@@ -4,7 +4,7 @@
         <mat-card *ngFor="let row of data"
             [class]='sm.getColsClass(comp, "datacols") + " card"' cdkDrag [cdkDragDisabled]="!comp.dragdrop">
             <div class="menu" (click)='toggleExpand(row)'>
-                <div>
+                <div class="line-break">
                     <mt-item-or-text [value]='summaryCard(row)' [sm]='sm'></mt-item-or-text>
                 </div>
                 <span class="menu-spacer"></span>
@@ -28,7 +28,7 @@
                 </tr>
                 <ng-container *ngFor="let row of data; let ind = index">
                     <tr class="mat-row table-row" (click)='toggleExpand(row)' cdkDrag [cdkDragDisabled]="!comp.dragdrop">
-                        <td class="mat-cell table-cell" *ngFor='let field of fields' [style]='getCellStyle(ind)'>
+                        <td class="mat-cell table-cell line-break" *ngFor='let field of fields' [style]='getCellStyle(ind)'>
                             <mt-item-or-text [value]='summaryCell(field, ind)' [sm]='sm'></mt-item-or-text>
                         </td>
                         <td class="mat-cell" [style]='getCellStyle(ind) + "width: 20px;"'>

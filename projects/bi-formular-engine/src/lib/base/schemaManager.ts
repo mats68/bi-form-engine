@@ -378,10 +378,14 @@ export class SchemaManager {
     const curVal = get(Values, comp.field);
     if (curVal === val) return;
     set(Values, comp.field, val);
-    this.validate(comp, val);
+    this.validate(comp, val, arrayInd);
 
     if (comp.onChange) {
       comp.onChange(this, comp, val);
+    }
+
+    if (this.Schema.onChange) {
+      this.Schema.onChange(this, comp, val);
     }
 
     this.InitDiffHighlightComp(comp, arrayInd);
@@ -390,16 +394,13 @@ export class SchemaManager {
   }
 
   validate(comp: IComponent, value: any, arrayInd: number = -1): void {
-    let msg = '';
+    this.removeErrors(comp, arrayInd);
     if (this.hasNoValue(value) && comp.required) {
-      msg = `${this.Strings.required}`;
-    } else if (comp.validate) {
-      msg = comp.validate(this, comp, value);
-    }
-    if (msg) {
-      this.addError(comp, msg, arrayInd);
-    } else {
-      this.removeError(comp, arrayInd);
+      this.addErrors(comp, `${this.Strings.required}`, arrayInd);
+    } 
+    if (comp.validate) {
+      const errs = comp.validate(this, comp, value);
+      this.addErrors(comp, errs, arrayInd);
     }
   }
 
@@ -426,27 +427,28 @@ export class SchemaManager {
         }
       }
     });
+    if (this.Schema.validate) {
+      const errs = this.Schema.validate(this, null, null);
+      this.addErrors(this.Schema, errs);
+    }
     this.AllValidated = true;
   }
 
-  private addError(comp: IComponent, msg: string, arrayInd: number) {
-    const error = this.Errors.find(e => e.comp === comp && e.arrayInd === arrayInd);
-    if (error) {
-      error.error = msg;
-    } else {
-      this.Errors.push({
-        comp: comp,
-        arrayInd: arrayInd,
-        error: msg
-      });
-    }
+  private addErrors(comp: IComponent, errors?: string | string[], arrayInd?: number) {
+    if (this.hasNoValue(errors)) return;
+    if (typeof errors === 'string') errors = [errors];
+    const errs: IError[] = errors.map(error => {
+      return {comp, arrayInd,error };
+    });
+    this.Errors = this.Errors.concat(errs);
   }
 
-  private removeError(comp: IComponent, arrayInd: number) {
-    const ind = this.Errors.findIndex(e => e.comp === comp && e.arrayInd === arrayInd);
-    if (ind > -1) {
-      this.Errors.splice(ind, 1);
-    }
+  private removeErrors(comp: IComponent, arrayInd: number) {
+    this.Errors = this.Errors.filter(e => !(e.comp === comp && e.arrayInd === arrayInd))
+    // const ind = this.Errors.findIndex(e => e.comp === comp && e.arrayInd === arrayInd);
+    // if (ind > -1) {
+    //   this.Errors.splice(ind, 1);
+    // }
   }
 
   removeAllErrors() {

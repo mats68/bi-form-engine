@@ -6,10 +6,11 @@ export type IComponentBoolFunction = (sm: SchemaManager, comp: IComponent, value
 export type IComponentComponentFunction = (sm: SchemaManager, comp: IComponent, value?: any) => IComponent;
 export type IComponentAnyFunction = (sm: SchemaManager, comp: IComponent, value?: any) => any;
 export type IComponentVoidFunction = (sm: SchemaManager, comp: IComponent, value?: any) => void;
+export type IValidateFunction = (sm: SchemaManager, comp: IComponent, value?: any) => string | string[] | undefined;
 export type ISchemaVoidFunction = (sm: SchemaManager) => void;
 export type ISelectOptionItemsFunction = (sm: SchemaManager, comp: IComponent, value?: any) => ISelectOptionItems | string[];
 
-export type ISummaryFunction = (sm: SchemaManager, comp: IComponent, row?: any, field?: string, arrayInd?: number) => any;
+export type ISummaryFunction = (sm: SchemaManager, comp: IComponent, value?: any, arrayInd?: number) => any;
 
 
 
@@ -79,11 +80,11 @@ export interface IComponentProps {
     color?: Color,
     autofocus?: boolean, 
     multiselect?: boolean, 
-    validate?: IComponentStringFunction,
+    validate?: IValidateFunction,
     onChange?: IComponentVoidFunction,
     summaryCard?: ISummaryFunction,
-    summaryTitleCell?: ISummaryFunction,
-    summaryCell?: ISummaryFunction,
+    summaryCellTitle?: ISummaryFunction,
+    summaryCellValue?: ISummaryFunction,
     columns?: string[],
     cardView?: boolean,
     dragdrop?: boolean,
@@ -146,8 +147,8 @@ export const ComponentKeys: KeysEnum<IComponent> = {
   validate: true,
   onChange: true,
   summaryCard: true,
-  summaryTitleCell: true,
-  summaryCell: true,
+  summaryCellTitle: true,
+  summaryCellValue: true,
   columns:true,
   dragdrop: true,
   onClick: true,

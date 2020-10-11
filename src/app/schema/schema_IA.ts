@@ -369,7 +369,7 @@ export const schema_IA: ISchema =
                             field: 'Liste_der_Verbraucher',
                             dragdrop: true,
                             cardView: true,
-                            summary(sm, comp, row) {
+                            summaryCard(sm, comp, row) {
                                 const bezeichnung = row.bezeichnung ? `Bezeichnung: <b>${row.bezeichnung}</b><br/>` : '';
                                 const anzahl = row.anzahl_v ? `Anzahl: <b>${row.anzahl_v}</b><br/>` : '';
                                 return {
@@ -483,7 +483,7 @@ export const schema_IA: ISchema =
                     required: true,
                     cardView: true,
                     dragdrop: true,
-                    summary(sm, comp, row) {
+                    summaryCard(sm, comp, row) {
                         const kunde = row.kunde ? `Kunde: <b>${row.kunde}</b><br/>` : '';
                         const rechnungsadresse = row.rechnungsadresse ? ` Rechnungsadresse: ${row.rechnungsadresse}` : '';
                         const gebaeudeteil = row.gebaeudeteil ? ` Gebäudeteil: ${row.gebaeudeteil}` : '';

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {schema_IA, values_IA } from './schema/schema_IA';
+import {schema1, values1 } from './schema/schema1';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,8 @@ import {schema_IA, values_IA } from './schema/schema_IA';
 })
 export class AppComponent {
   title = 'app';
-  schema =  schema_IA;
-  values = values_IA;
+  schema =  schema1;
+  values = values1;
 
   getValues() {
     return JSON.stringify(this.values, null, 2);

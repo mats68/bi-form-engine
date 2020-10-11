@@ -127,10 +127,11 @@ export class MtDatatableComponent extends MtBaseComponent implements OnInit, OnC
 
   summaryTitle(field: IComponent): any {
     let ret;
-    if (this.comp.summaryTitleCell) {
-      ret = this.comp.summaryTitleCell(this.sm, this.comp, null, field.field);
+    if (field.summaryCellTitle) {
+      ret = field.summaryCellTitle(this.sm, field);
+    } else if (this.comp.summaryCellTitle) {
+      ret = this.comp.summaryCellTitle(this.sm, field);
     }
-    
     if (this.sm.checkValueType(ret) === IValueType.undefined) {
       ret = this.sm.getLabel(field);
     }
@@ -139,8 +140,11 @@ export class MtDatatableComponent extends MtBaseComponent implements OnInit, OnC
 
   summaryCell(field: IComponent, arrayInd: number): any {
     let ret;
-    if (this.comp.summaryCell) {
-      ret = this.comp.summaryCell(this.sm, this.comp, null, field.field, arrayInd);
+    const val = this.sm.getValue(field, null, arrayInd);
+    if (field.summaryCellValue) {
+      ret = field.summaryCellValue(this.sm, field, val, arrayInd);      
+    } else if (this.comp.summaryCellValue) {
+      ret = this.comp.summaryCellValue(this.sm, field, val, arrayInd);
     }
     if (this.sm.checkValueType(ret) === IValueType.undefined) {
       ret = this.sm.getValue(field, this.sm.Values, arrayInd);
