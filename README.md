@@ -1,25 +1,27 @@
-Im Hauptverzeichnis
+# @next-gen/formular-engine
+  Package Source ist in projects/bi-formular-engine.
+  Im root-verzeichnis ist ein test app die man starten kann mit `ng serve` 
 
-npm run b
-oder 
-npm run w 
-für watch
+## Development of @next-gen/formular-engine
+(im root verzeichnis)   
+- `npm run b`  
+  für build oder 
+- `npm run w`  
+  für watch
 
-für example app:
-ng serve
+## npm package publish
+- vorher builden   
+  Built package befindet sich im dist-folder ("dist/bi-formular-engine")
 
+- `npm run pub`  
+   um version-number zu erhöhen und publishen
 
-npm package install
+## Installation @next-gen/formular-engine in app
 
-- update version number 
-- npm run b
-- cd to dist folder
-- npm publish
+Es müssen zuerst dependencies installert werden (moment.js zur Datumsformatierung):  
 
+ng add @angular/material  
+npm i moment  
+npm i @angular/material-moment-adapter  
 
-use @next-gen/formular-engine in app:
-
-ng add @angular/material
-npm i moment
-npm i @angular/material-moment-adapter
-npm i @next-gen/formular-engine
+npm i @next-gen/formular-engine  

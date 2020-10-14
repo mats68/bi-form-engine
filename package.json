@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "pub": "cd dist/bi-formular-engine && npm version patch --force && npm publish",
     "l": "cd dist/bi-formular-engine && npm link",
     "b": "ng build bi-formular-engine --prod",
     "w": "ng build bi-formular-engine --watch"
