@@ -1,1 +1,13 @@
-// export const GRIDID = 'id__';
+export const err_schema = 'schema must be an object with a type property';
+export const err_notype = 'type Property is missing';
+export const err_typewrong = 'type Property is wrong';
+export const err_noChild = 'children Property is missing';
+export const err_zeroChild = 'children Property has no entry';
+export const err_noField = 'field Property is missing';
+export const err_noLabel = 'label Property is missing';
+export const err_doubleField = 'field Property is more than once used!';
+export const err_doubleName = 'name Property is more than once used!';
+export const err_noSummary = 'summaryCard property is necessary in datatable cardview';
+export const err_noOptions = 'options Property is necessary';
+export const err_noIcon = 'icon Property is necessary';
+export const err_unn = prop => `Unnecessary Property "${prop}"`;

@@ -1,5 +1,6 @@
 import { strings } from './strings';
 import { ISchema, IComponent, ComponentType, ISelectOptionItems, DataType, IScreenSize, IAppearance, SchemaKeys, ComponentKeys } from './types';
+import { err_schema, err_notype, err_typewrong, err_noChild, err_zeroChild, err_noField, err_noLabel, err_doubleField, err_doubleName, err_noSummary, err_noOptions, err_noIcon, err_unn } from './constants'
 import { Subject } from 'rxjs';
 import cloneDeep from 'lodash.clonedeep';
 import merge from 'lodash.merge';
@@ -58,9 +59,9 @@ export enum IValueType {
 }
 
 export interface ISchemaError {
-  comp?: IComponent;
   error: string;
   type: ISchemaErrorType;
+  comp: IComponent;
 }
 
 
@@ -68,11 +69,13 @@ export class SchemaManager {
   Schema: ISchema;
   Values: any;
   DiffValues: any;
+  MemValues = {};
   ValuesChanged: boolean;
   Settings: ISettings;
   Strings: any;
 
   Errors: IError[];
+  SchemaErrors: ISchemaError[];
   highlightedFields: IHighlight[];
   AllValidated: boolean;
 
@@ -121,6 +124,12 @@ export class SchemaManager {
   }
 
   InitSchema(schema: ISchema) {
+    this.SchemaErrors = []
+    if (this.checkValueType(schema) !== IValueType.component) {
+      this.SchemaErrors.push({type: ISchemaErrorType.error, error: err_schema, comp: this.Schema})
+      return;
+    }
+
     this.Schema = cloneDeep(schema);
     if (this.Schema.inheritFrom) this.InitInherits();
     this.Errors = [];
@@ -337,11 +346,11 @@ export class SchemaManager {
 
   getValue(comp: IComponent, values: any = null, arrayInd: number = -1): any {  //values could be diff-values
     if (!comp.field) {
-      console.error('field not specified !');
-      console.dir(JSON.stringify(comp));
+      console.error('field not specified ! name: ', comp.name, 'type: ', comp.type);
       return undefined;
     }
-    const Values = this.getParentValues(comp, values || this.Values, arrayInd);
+    let Values = values ? values : comp.unbound ? this.MemValues : this.Values
+    Values = this.getParentValues(comp, Values, arrayInd);
     const val = get(Values, comp.field);
 
     if (this.hasNoValue(val)) {
@@ -359,12 +368,12 @@ export class SchemaManager {
   updateValue(comp: IComponent, val: any, arrayInd: number = -1): void {
 
     if (!comp.field) {
-      console.error('field not specified !');
-      console.dir(JSON.stringify(comp));
+      console.error('field not specified ! name: ', comp.name, 'type: ', comp.type);
       return;
     }
 
-    const Values = this.getParentValues(comp, this.Values, arrayInd);
+    let Values = comp.unbound ? this.MemValues : this.Values
+    Values = this.getParentValues(comp, Values, arrayInd);
 
     if (comp.dataType === DataType.float) {
       val = parseFloat(val);
@@ -378,7 +387,7 @@ export class SchemaManager {
     const curVal = get(Values, comp.field);
     if (curVal === val) return;
     set(Values, comp.field, val);
-    this.validate(comp, val, arrayInd);
+    // this.validate(comp, val, arrayInd);
 
     if (comp.onChange) {
       comp.onChange(this, comp, val);
@@ -428,7 +437,7 @@ export class SchemaManager {
       }
     });
     if (this.Schema.validate) {
-      const errs = this.Schema.validate(this, null, null);
+      const errs = this.Schema.validate(this, this.Schema, null);
       this.addErrors(this.Schema, errs);
     }
     this.AllValidated = true;
@@ -635,62 +644,57 @@ export class SchemaManager {
 
   }
 
-  CheckSchema(): ISchemaError[] {
+  CheckSchema(): void {
     //todo
     // check type in keys
     // datatable not in datatable
 
-    const notype = 'type Property is missing';
-    const noChild = 'children Property is missing';
-    const zeroChild = 'children Property has no entry';
-    const noField = 'field Property is missing';
-    const noLabel = 'label Property is missing';
-    const doubleField = 'field Property is more than once used!';
-    const doubleName = 'name Property is more than once used!';
-    const noSummary = 'summary is necessary in datatable cardview';
-    const noOptions = 'options Property is necessary';
-    const noIcon = 'icon Property is necessary';
-    const unn = prop => `Unnecessary Property "${prop}"`;
-    const err = (msg: string, comp: IComponent): string => `${msg}${comp.name ? ', name: "' + comp.name + '"' : ''}${comp.field ? ', field: "' + comp.field + '"' : ''}`;
+    this.SchemaErrors = []
+
+    // const err = (msg: string, comp: IComponent): string => `${msg}${comp.name ? ', name: "' + comp.name + '"' : ''}${comp.field ? ', field: "' + comp.field + '"' : ''}`;
+    const AddErr = (comp: IComponent, error: string, isError: boolean) => {const type = isError ? ISchemaErrorType.error : ISchemaErrorType.warning; this.SchemaErrors.push({ type, comp, error})}
 
     const containers: ComponentType[] = [ComponentType.form, ComponentType.card, ComponentType.panel, ComponentType.expansionspanel, ComponentType.tabs, ComponentType.tab, ComponentType.toolbar, ComponentType.datatable];
     const fields: ComponentType[] = [ComponentType.input, ComponentType.select, ComponentType.date, ComponentType.checkbox, ComponentType.switch, ComponentType.radiogroup, ComponentType.slider, ComponentType.datatable];
     const noLabels: ComponentType[] = [ComponentType.divider, ComponentType.tabs, ComponentType.panel, ComponentType.html, ComponentType.errorpanel, ComponentType.icon, ComponentType.form, ComponentType.button, ComponentType.icon];
 
     const Errs: ISchemaError[] = [];
-    const AddErr = (comp: IComponent, msg: string, isError: boolean) => {
-      const type = isError ? ISchemaErrorType.error : ISchemaErrorType.warning;
-      Errs.push({ comp, error: err(msg, comp), type });
-    }
 
     const ck = Object.keys(ComponentKeys);
     const sk = Object.keys(SchemaKeys).concat(ck);
+    const tk = Object.values(ComponentType);
     const duplicateFields = [];
     const duplicateNames = [];
+
+
 
     //Check components 
     const o: ITraverseOptions = {fullTraverse: true};
     this.traverseSchema(c => {
       if (!c.type) {
-        AddErr(c, notype, true);
+        AddErr(c, err_notype, true);
       } else {
+        // @ts-ignore
+        if (tk.indexOf(c.type) === -1) {
+          AddErr(c, err_typewrong , true);
+        }
         if (containers.indexOf(c.type as ComponentType) >= 0) {
           if (!c.children) {
-            AddErr(c, noChild, true);
+            AddErr(c, err_noChild, true);
           } else {
             const typ = this.checkValueType(c.children);
             if (typ !== IValueType.array || c.children.length === 0) {
-              AddErr(c, zeroChild, true);
+              AddErr(c, err_zeroChild, true);
             }
           }
         }
 
-        if (fields.indexOf(c.type as ComponentType) >= 0 && (!c.field)) AddErr(c, noField, true);
-        if (noLabels.indexOf(c.type as ComponentType) === -1 && (this.checkValueType(c.label) === IValueType.undefined)) AddErr(c, noLabel, false);
+        if (fields.indexOf(c.type as ComponentType) >= 0 && (!c.field)) AddErr(c, err_noField, true);
+        if (noLabels.indexOf(c.type as ComponentType) === -1 && (this.checkValueType(c.label) === IValueType.undefined)) AddErr(c, err_noLabel, false);
 
-        if ((c.type === ComponentType.select || c.type === ComponentType.radiogroup) && !c.options) AddErr(c, noOptions, true);
-        if (c.type === ComponentType.datatable && c.cardView && !c.summaryCard) AddErr(c, noSummary, true);
-        if ((c.type === ComponentType.icon) && !c.icon) AddErr(c, noIcon, true);
+        if ((c.type === ComponentType.select || c.type === ComponentType.radiogroup) && !c.options) AddErr(c, err_noOptions, true);
+        if (c.type === ComponentType.datatable && c.cardView && !c.summaryCard) AddErr(c, err_noSummary, true);
+        if ((c.type === ComponentType.icon) && !c.icon) AddErr(c, err_noIcon, true);
       }
 
       if (c.field) {
@@ -698,7 +702,7 @@ export class SchemaManager {
         if (c.parentComp && c.type === ComponentType.datatable) {
           field = c.parentComp.field + '.' + field;
         }
-        duplicateFields[field] ? AddErr(c, doubleField, true) : duplicateFields[field] = true;
+        duplicateFields[field] ? AddErr(c, err_doubleField, true) : duplicateFields[field] = true;
       }
 
       if (c.name) {
@@ -707,16 +711,14 @@ export class SchemaManager {
           let pname = c.parentComp.name ? c.parentComp.name : (c.parentComp.field ? c.parentComp.field : '');
           name = pname + '.' + name;
         }
-        duplicateNames[name] ? AddErr(c, doubleName, true) : duplicateNames[name] = true;
+        duplicateNames[name] ? AddErr(c, err_doubleName, true) : duplicateNames[name] = true;
       }
 
       const propKeys = c.parentComp ? ck : sk;
       Object.keys(c).forEach(k => {
-        if (propKeys.indexOf(k) === -1) AddErr(c, unn(k), false);
+        if (propKeys.indexOf(k) === -1) AddErr(c, err_unn(k), false);
       });
     }, o);
-
-    return Errs;
   }
 
 
