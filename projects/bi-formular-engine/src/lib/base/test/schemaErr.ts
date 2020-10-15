@@ -47,6 +47,131 @@ export const schemaErr: ISchema = {
             name: 'divider',
 
         },
+        {
+            type: 'checkbox',
+            field: 'doublefield',
+        },
+        {
+            type: 'input',
+            field: 'doublefield',
+        },
+        {
+            type: 'date',
+            name: 'doublename',
+        },
+        {
+            type: 'input',
+            name: 'doublename',
+            field: 'doublename',
+        },
+        {
+            type: 'datatable',
+            name: 'datatable',
+            cardView: true,
+            field: 'datatable',
+            children: [
+                {
+                    type: 'input',
+                    field: 'd-input',
+                    name: 'd-input',
+                }
+            ]
+        },
+        {
+            type: 'select',
+            field: 'selectnoptions'
+        },
+        {
+            type: 'select',
+            field: 'selecthasptions',
+            options: ['A', 'B']
+        },
+        {
+            type: 'radiogroup',
+            field: 'radiogroupnooptions'
+        },
+        {
+            type: 'radiogroup',
+            field: 'radiogrouphasptions',
+            options: ['A', 'B']
+        },
+        {
+            type: 'select',
+            field: 'selectzerooptions',
+            options: []
+        },
+        {
+            type: 'select',
+            field: 'selectwrongoptions',
+            // @ts-ignore
+            options: [1, 2, 3]
+        },
+        {
+            type: 'select',
+            field: 'selectwrongoptions2',
+            // @ts-ignore
+            options: ['1', '2', 3]
+        },
+        {
+            type: 'select',
+            field: 'selectwrongoptions3',
+            // @ts-ignore
+            options: [{text: '1'}]
+        },
+        {
+            type: 'select',
+            field: 'selectwrongoptions4',
+            // @ts-ignore
+            options: [{value: 1, text: '1'}, {val: 4, text: 'da'}]
+        },
+        {
+            type: 'select',
+            field: 'selectoptionsok1',
+            options: ['1', '2', '3']
+        },
+        {
+            type: 'select',
+            field: 'selectoptionsok2',
+            options: [{value: '1', text: '1'}, {value: '4', text: 'da'}]
+        },
+        {
+            type: 'select',
+            field: 'selectoptionsok3',
+            options: [{value: 1, text: '1'}, {value: 4, text: 'da'}]
+        },
+        {
+            type: 'select',
+            field: 'selectoptionsDouble1',
+            options: ['1', '2', '3', '4', '1']
+        },
+        {
+            type: 'select',
+            field: 'selectoptionsDouble2',
+            options: [{value: '1', text: '1'}, {value: '4', text: 'da'}, {value: '1', text: 'da'}]
+        },
+        {
+            type: 'panel',
+            children: [
+                {
+                    type: 'button',
+                    name: 'btnunn',
+                    // @ts-ignore
+                    label1: 'hello'
+                },
+                {
+                    type: 'card',
+                    children: [
+                        {
+                            type: 'icon',
+                            name: 'iconmissing',
+                        }
+                    ]
+
+                }
+
+            ]
+        },
+
     ]
 }
 

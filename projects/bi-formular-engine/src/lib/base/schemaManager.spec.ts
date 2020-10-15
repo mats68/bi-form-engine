@@ -1,6 +1,6 @@
 import { IValueType, SchemaManager } from './schemaManager';
 import { schemaErr } from './test/schemaErr'
-import { err_schema, err_notype, err_typewrong, err_noChild, err_zeroChild, err_noField, err_noLabel, err_doubleField, err_doubleName, err_noSummary, err_noOptions, err_noIcon, err_unn } from './constants'
+import { err_schema, err_notype, err_typewrong, err_noChild, err_zeroChild, err_noField, err_noLabel, err_doubleField, err_doubleName, err_noSummary, err_noOptions, err_zeroOptions, err_wrongOptions, err_OptionsDoubleValues, err_noIcon, err_unn } from './constants'
 
 const hasError = (sm: SchemaManager, error: string, name?: string, field?: string ): boolean => {
     const f = sm.SchemaErrors.findIndex(e => {
@@ -64,12 +64,69 @@ describe('Component has wrong properties', () => {
         expect(hasError(sm, err_noLabel, 'noLabelnoField')).toEqual(true);
     })
 
-    it('input has no label and noi field', () => {
+    it('input has no label and no field', () => {
         expect(hasError(sm, err_noLabel, 'noLabelnoField')).toEqual(true);
         expect(hasError(sm, err_noField, 'noLabelnoField')).toEqual(true);
     })
 
+    it('double fields', () => {
+        expect(hasError(sm, err_doubleField, '', 'doublefield')).toEqual(true);
+        expect(hasError(sm, err_doubleField, 'hasfield')).toEqual(false);
+    })
     
+    it('double names', () => {
+        expect(hasError(sm, err_doubleName, 'doublename')).toEqual(true);
+        expect(hasError(sm, err_doubleField, 'hasfield')).toEqual(false);
+    })
+
+    it('datatable no Summary Cradview', () => {
+        sm.getCompByName('datatable').cardView = true;
+        sm.CheckSchema()
+        expect(hasError(sm, err_noSummary, 'datatable')).toEqual(true);
+
+        sm.getCompByName('datatable').cardView = false;
+        sm.CheckSchema()
+        expect(hasError(sm, err_noSummary, 'datatable')).toEqual(false);
+    })
+
+    it('select has no options', () => {
+        expect(hasError(sm, err_noOptions, '', 'selectnoptions')).toEqual(true);
+        expect(hasError(sm, err_noOptions, '', 'selecthasptions')).toEqual(false);
+    })
+
+    it('radiogroup has no options', () => {
+        expect(hasError(sm, err_noOptions, '', 'radiogroupnooptions')).toEqual(true);
+        expect(hasError(sm, err_noOptions, '', 'radiogrouphasptions')).toEqual(false);
+    })
+
+    it('select has zero options', () => {
+        expect(hasError(sm, err_zeroOptions, '', 'selectzerooptions')).toEqual(true);
+    })
+
+    it('select has wrong options', () => {
+        expect(hasError(sm, err_wrongOptions, '', 'selectwrongoptions')).toEqual(true);
+        expect(hasError(sm, err_wrongOptions, '', 'selectwrongoptions2')).toEqual(true);
+        expect(hasError(sm, err_wrongOptions, '', 'selectwrongoptions3')).toEqual(true);
+        expect(hasError(sm, err_wrongOptions, '', 'selectwrongoptions4')).toEqual(true);
+    })
+
+    it('select has duplicate values in options', () => {
+        expect(hasError(sm, err_OptionsDoubleValues, '', 'selectoptionsDouble1')).toEqual(true);
+        expect(hasError(sm, err_OptionsDoubleValues, '', 'selectoptionsDouble2')).toEqual(true);
+
+        expect(hasError(sm, err_OptionsDoubleValues, '', 'selectoptionsok1')).toEqual(false);
+    })
+
+    it('select has ok options', () => {
+        expect(hasError(sm, err_wrongOptions, '', 'selectoptionsok1')).toEqual(false);
+        expect(hasError(sm, err_wrongOptions, '', 'selectoptionsok2')).toEqual(false);
+        expect(hasError(sm, err_wrongOptions, '', 'selectoptionsok3')).toEqual(false);
+    })
+
+    it('unnecessary option', () => {
+        expect(hasError(sm, err_unn('label1'), 'btnunn')).toEqual(true);
+        expect(hasError(sm, err_noIcon, 'iconmissing')).toEqual(true);
+    })
 
 
 })

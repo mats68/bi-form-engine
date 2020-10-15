@@ -1,6 +1,6 @@
 import { strings } from './strings';
 import { ISchema, IComponent, ComponentType, ISelectOptionItems, DataType, IScreenSize, IAppearance, SchemaKeys, ComponentKeys } from './types';
-import { err_schema, err_notype, err_typewrong, err_noChild, err_zeroChild, err_noField, err_noLabel, err_doubleField, err_doubleName, err_noSummary, err_noOptions, err_noIcon, err_unn } from './constants'
+import { err_schema, err_notype, err_typewrong, err_noChild, err_zeroChild, err_noField, err_noLabel, err_doubleField, err_doubleName, err_noSummary, err_noOptions, err_OptionsArray, err_zeroOptions, err_wrongOptions, err_OptionsDoubleValues, err_noIcon, err_unn } from './constants'
 import { Subject } from 'rxjs';
 import cloneDeep from 'lodash.clonedeep';
 import merge from 'lodash.merge';
@@ -126,7 +126,7 @@ export class SchemaManager {
   InitSchema(schema: ISchema) {
     this.SchemaErrors = []
     if (this.checkValueType(schema) !== IValueType.component) {
-      this.SchemaErrors.push({type: ISchemaErrorType.error, error: err_schema, comp: this.Schema})
+      this.SchemaErrors.push({ type: ISchemaErrorType.error, error: err_schema, comp: this.Schema })
       return;
     }
 
@@ -135,7 +135,7 @@ export class SchemaManager {
     this.Errors = [];
     this.AllValidated = false;
     if (this.Schema.onInitSchema) this.Schema.onInitSchema(this);
-    this.traverseSchema((c,p) => {
+    this.traverseSchema((c, p) => {
       c.parentComp = p;
     });
     this.InitValues(this.Values);
@@ -158,7 +158,7 @@ export class SchemaManager {
 
     const updateArray = (schema: ISchema): IComponent[] => {
       let arr: IComponent[] = [];
-      const o: ITraverseOptions = {fullTraverse: true};
+      const o: ITraverseOptions = { fullTraverse: true };
       this.traverseSchema((c, p) => {
         c.parentComp = p;
         arr.push(c);
@@ -206,7 +206,7 @@ export class SchemaManager {
       this.Values = {};
       this.traverseSchema(c => {
         if (c.field && c.default) {
-          if (c.type !== ComponentType.datatable && !this.fieldIsInDataTable(c) ) {
+          if (c.type !== ComponentType.datatable && !this.fieldIsInDataTable(c)) {
             const val = this.getPropValue(c, 'default');
             set(this.Values, c.field, val);
           }
@@ -224,7 +224,7 @@ export class SchemaManager {
   InitValuesArray(comp: IComponent, Values: any) {
     if (comp.type !== ComponentType.datatable) return;
     comp.children.forEach(c => {
-      if (c.field && c.default) { 
+      if (c.field && c.default) {
         const val = this.getPropValue(c, 'default');
         set(Values, c.field, val);
       }
@@ -287,13 +287,13 @@ export class SchemaManager {
       if (val1 === val2) {
         if (ind > -1) this.highlightedFields.splice(ind, 1);
       } else {
-        if (ind === -1) this.highlightedFields.push({comp, arrayInd});
+        if (ind === -1) this.highlightedFields.push({ comp, arrayInd });
       }
     }
   }
 
   getDiffHighlight(comp: IComponent, arrayInd: number = -1): boolean {
-    if (!this.DiffValues || !this.highlightedFields ) return false;
+    if (!this.DiffValues || !this.highlightedFields) return false;
     const h = this.highlightedFields.find(h => h.comp === comp && h.arrayInd === arrayInd);
     return !!h;
   }
@@ -406,7 +406,7 @@ export class SchemaManager {
     this.removeErrors(comp, arrayInd);
     if (this.hasNoValue(value) && comp.required) {
       this.addErrors(comp, `${this.Strings.required}`, arrayInd);
-    } 
+    }
     if (comp.validate) {
       const errs = comp.validate(this, comp, value);
       this.addErrors(comp, errs, arrayInd);
@@ -447,7 +447,7 @@ export class SchemaManager {
     if (this.hasNoValue(errors)) return;
     if (typeof errors === 'string') errors = [errors];
     const errs: IError[] = errors.map(error => {
-      return {comp, arrayInd,error };
+      return { comp, arrayInd, error };
     });
     this.Errors = this.Errors.concat(errs);
   }
@@ -478,14 +478,14 @@ export class SchemaManager {
     } else {
       if (comp.styles && comp.styles[stylename]) {
         return comp.styles[stylename];
-      } 
+      }
     }
 
   }
 
   getCompByName(name: string): IComponent | undefined {
     let comp;
-    const o: ITraverseOptions = {done: false, fullTraverse: true};
+    const o: ITraverseOptions = { done: false, fullTraverse: true };
     this.traverseSchema(c => {
       if (c.name === name) {
         o.done = true;
@@ -497,7 +497,7 @@ export class SchemaManager {
 
   getCompByField(field: string): IComponent | undefined {
     let comp;
-    const o: ITraverseOptions = {done: false};
+    const o: ITraverseOptions = { done: false };
     this.traverseSchema(c => {
       if (c.field === field) {
         o.done = true;
@@ -552,12 +552,25 @@ export class SchemaManager {
     return !!hasGrid;
   }
 
+  private arrayHasDuplicates(arr: any[]): boolean {
+    let valuesAlreadySeen = []
+    for (let i = 0; i < arr.length; i++) {
+      let value = arr[i]
+      if (valuesAlreadySeen.indexOf(value) !== -1) {
+        return true
+      }
+      valuesAlreadySeen.push(value)
+    }
+    return false    
+
+  } 
+
   DoFocus(comp: IComponent, arrayInd: number = -1) {
     const ok = this.MakeVisible(comp, arrayInd);
     if (ok) setTimeout(() => this.OnFocus.next(comp), 100);
   }
 
- 
+
   MakeVisible(comp: IComponent, arrayInd: number): boolean {
     let curTab: IComponent = null;
     let cur = comp;
@@ -583,7 +596,7 @@ export class SchemaManager {
         while (p && p.type !== ComponentType.datatable) {
           p = p.parentComp;
         }
-        if (p  && p.type === ComponentType.datatable) p.curRowInd = arrayInd;
+        if (p && p.type === ComponentType.datatable) p.curRowInd = arrayInd;
       }
       cur = cur.parentComp;
     }
@@ -593,7 +606,7 @@ export class SchemaManager {
 
   traverseSchema(fn: ITraverseCallback, options?: ITraverseOptions, comp?: IComponent, parentComp?: IComponent) {
     if (options && options.done) return;
-    
+
     if (!comp) comp = this.Schema;
 
     fn(comp, parentComp, options);
@@ -641,8 +654,26 @@ export class SchemaManager {
         return IValueType.object;
       }
     }
-
   }
+
+  checkOptionsValueType(val: any[]): boolean {
+    if (this.checkValueType(val) !== IValueType.array) return false
+    if (val.length === 0) return true
+    const typ = this.checkValueType(val[0]);
+    if (!(typ === IValueType.string || typ === IValueType.object)) return false
+    let ok = true
+    if (typ === IValueType.string) {
+      const nok = !!val.find(o => this.checkValueType(o) !== IValueType.string)
+      ok = !nok
+    } else {
+      let nok = !!val.find(o => this.checkValueType(o) !== IValueType.object)
+      ok = !nok
+      if (ok) nok = !!val.find(o => (this.checkValueType(o.value) === IValueType.undefined || this.checkValueType(o.text) === IValueType.undefined))
+      ok = !nok
+    }
+    return ok
+  }
+
 
   CheckSchema(): void {
     //todo
@@ -652,13 +683,11 @@ export class SchemaManager {
     this.SchemaErrors = []
 
     // const err = (msg: string, comp: IComponent): string => `${msg}${comp.name ? ', name: "' + comp.name + '"' : ''}${comp.field ? ', field: "' + comp.field + '"' : ''}`;
-    const AddErr = (comp: IComponent, error: string, isError: boolean) => {const type = isError ? ISchemaErrorType.error : ISchemaErrorType.warning; this.SchemaErrors.push({ type, comp, error})}
+    const AddErr = (comp: IComponent, error: string, isError: boolean) => { const type = isError ? ISchemaErrorType.error : ISchemaErrorType.warning; this.SchemaErrors.push({ type, comp, error }) }
 
     const containers: ComponentType[] = [ComponentType.form, ComponentType.card, ComponentType.panel, ComponentType.expansionspanel, ComponentType.tabs, ComponentType.tab, ComponentType.toolbar, ComponentType.datatable];
     const fields: ComponentType[] = [ComponentType.input, ComponentType.select, ComponentType.date, ComponentType.checkbox, ComponentType.switch, ComponentType.radiogroup, ComponentType.slider, ComponentType.datatable];
     const noLabels: ComponentType[] = [ComponentType.divider, ComponentType.tabs, ComponentType.panel, ComponentType.html, ComponentType.errorpanel, ComponentType.icon, ComponentType.form, ComponentType.button, ComponentType.icon];
-
-    const Errs: ISchemaError[] = [];
 
     const ck = Object.keys(ComponentKeys);
     const sk = Object.keys(SchemaKeys).concat(ck);
@@ -666,17 +695,15 @@ export class SchemaManager {
     const duplicateFields = [];
     const duplicateNames = [];
 
-
-
     //Check components 
-    const o: ITraverseOptions = {fullTraverse: true};
+    const o: ITraverseOptions = { fullTraverse: true };
     this.traverseSchema(c => {
       if (!c.type) {
         AddErr(c, err_notype, true);
       } else {
         // @ts-ignore
         if (tk.indexOf(c.type) === -1) {
-          AddErr(c, err_typewrong , true);
+          AddErr(c, err_typewrong, true);
         }
         if (containers.indexOf(c.type as ComponentType) >= 0) {
           if (!c.children) {
@@ -693,6 +720,23 @@ export class SchemaManager {
         if (noLabels.indexOf(c.type as ComponentType) === -1 && (this.checkValueType(c.label) === IValueType.undefined)) AddErr(c, err_noLabel, false);
 
         if ((c.type === ComponentType.select || c.type === ComponentType.radiogroup) && !c.options) AddErr(c, err_noOptions, true);
+        if (c.options) {
+          if (this.checkValueType(c.options) !== IValueType.array) {
+            AddErr(c, err_OptionsArray, true);
+          } else {
+            if (c.options.length === 0) {
+              AddErr(c, err_zeroOptions, false);
+            } else {
+              // @ts-ignore
+              if (!this.checkOptionsValueType(c.options)) {
+                AddErr(c, err_wrongOptions, true);
+              } else {
+                const o = this.selectOptionsAsObjects(c);
+                if (this.arrayHasDuplicates(o.map(i => i.value))) AddErr(c, err_OptionsDoubleValues, true);
+              }
+            }
+          }
+        }
         if (c.type === ComponentType.datatable && c.cardView && !c.summaryCard) AddErr(c, err_noSummary, true);
         if ((c.type === ComponentType.icon) && !c.icon) AddErr(c, err_noIcon, true);
       }
