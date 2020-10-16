@@ -138,6 +138,11 @@
             "production": {
               "tsConfig": "projects/bi-formular-engine/tsconfig.lib.prod.json"
             }
+          },
+          "serve": {
+            "options": {
+              "vendorSourceMap": true
+            }
           }
         },
         "test": {
