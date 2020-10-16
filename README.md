@@ -8,6 +8,9 @@
   für build oder 
 - `npm run w`  
   für watch
+- `npm run test-lib`
+  run tests
+
 
 ## npm package publish
 - vorher builden   
