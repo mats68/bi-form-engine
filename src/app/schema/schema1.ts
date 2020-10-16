@@ -7,7 +7,7 @@ export const schema1: ISchema = {
         {
             type: 'input',
             label: 'Div',
-            field: 'Div',
+            field: 'Erstes Feld',
             required: true,
            
         },
@@ -42,7 +42,7 @@ export const schema1: ISchema = {
                     multiline: true,
                     field: 'Adresse',
                     validate(sm, comp, value) {
-                        return ''
+                        if (value.length < 10) return 'Mindestens 10 Zeichen eingeben'
                     }
 
                 },
@@ -87,5 +87,5 @@ export const schema1: ISchema = {
 }
 
 export const values1 = {
-    "table1": [{ "Name": "Thaler", "Vorname": "Matthias", "Adresse": "Bonzenstr. 11\n5001 Bern", "done": false }, { "Name": "Thaler2", "Vorname": "Matthias", "Adresse": "Bonzenstr. 12\n5001 Bern", "done": false }]
+    "table1": [{ "Name": "Thaler", "Vorname": "Matthias", "Adresse": "Bonzenstr. 11\n5001 Bern", "done": false }, { "Name": "", "Vorname": "Matthias", "Adresse": "Bonzenstr. 12\n5001 Bern", "done": false }]
 }

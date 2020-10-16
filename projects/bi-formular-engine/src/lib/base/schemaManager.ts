@@ -387,7 +387,6 @@ export class SchemaManager {
     const curVal = get(Values, comp.field);
     if (curVal === val) return;
     set(Values, comp.field, val);
-    // this.validate(comp, val, arrayInd);
 
     if (comp.onChange) {
       comp.onChange(this, comp, val);
@@ -403,6 +402,12 @@ export class SchemaManager {
   }
 
   validate(comp: IComponent, value: any, arrayInd: number = -1): void {
+    
+    if (arrayInd === -1 && this.fieldIsInDataTable(comp))
+    {
+      const pd = this.getParentDataTable(comp)
+      arrayInd = pd.curRowInd;
+    }
     this.removeErrors(comp, arrayInd);
     if (this.hasNoValue(value) && comp.required) {
       this.addErrors(comp, `${this.Strings.required}`, arrayInd);
@@ -465,7 +470,9 @@ export class SchemaManager {
   }
 
   getError(comp: IComponent) {
-    const arrayInd = comp.parentComp && comp.parentComp.type === ComponentType.datatable && comp.parentComp.curRowInd ? comp.parentComp.curRowInd : -1;
+    const pd = this.getParentDataTable(comp)
+  
+    const arrayInd = pd && pd.curRowInd ? pd.curRowInd : -1;
     const error = this.Errors.find(e => e.comp === comp && e.arrayInd === arrayInd);
     return error ? error.error : '';
   }
@@ -621,15 +628,20 @@ export class SchemaManager {
     }
   }
 
-  fieldIsInDataTable(comp: IComponent): boolean {
+  getParentDataTable(comp: IComponent): IComponent | null {
     let p = comp.parentComp;
     while (p) {
       if (p.type === ComponentType.datatable) {
-        return true;
+        return p;
       }
       p = p.parentComp;
     }
-    return false;
+    return null;
+  }
+
+  fieldIsInDataTable(comp: IComponent): boolean {
+    const c = this.getParentDataTable(comp)
+    return (c !== null)
   }
 
   checkValueType(val: any): IValueType {
