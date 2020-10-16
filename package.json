@@ -9,7 +9,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "test-lib": "ng test bi-formular-engine",
-    "pub": "cd dist/bi-formular-engine && npm version patch --force && npm publish",
+    "update-version": "cd projects/bi-formular-engine && npm version patch --force",
+    "publ": "cd dist/bi-formular-engine && npm publish",
+    "pub": "npm run update-version && npm run publ",
     "l": "cd dist/bi-formular-engine && npm link",
     "b": "ng build bi-formular-engine --prod",
     "w": "ng build bi-formular-engine --watch"
