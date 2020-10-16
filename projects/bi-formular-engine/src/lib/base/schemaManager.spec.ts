@@ -1,6 +1,7 @@
 import { IValueType, SchemaManager } from './schemaManager';
 import { schemaErr } from './test/schemaErr'
-import { err_schema, err_notype, err_typewrong, err_noChild, err_zeroChild, err_noField, err_noLabel, err_doubleField, err_doubleName, err_noSummary, err_noOptions, err_zeroOptions, err_wrongOptions, err_OptionsDoubleValues, err_noIcon, err_unn } from './constants'
+import { err_schema, err_notype, err_typewrong, err_noChild, err_zeroChild, err_noField, err_noLabel, err_doubleField, err_doubleName, 
+    err_noSummary, err_noOptions, err_zeroOptions, err_wrongOptions, err_OptionsDoubleValues, err_noIcon, err_noDataTableInDataTable, err_noDataTableNoField, err_unn } from './constants'
 
 const hasError = (sm: SchemaManager, error: string, name?: string, field?: string ): boolean => {
     const f = sm.SchemaErrors.findIndex(e => {
@@ -126,6 +127,15 @@ describe('Component has wrong properties', () => {
     it('unnecessary option', () => {
         expect(hasError(sm, err_unn('label1'), 'btnunn')).toEqual(true);
         expect(hasError(sm, err_noIcon, 'iconmissing')).toEqual(true);
+    })
+
+    it('datatable in datatable not ok', () => {
+        expect(hasError(sm, err_noDataTableInDataTable, 'datatableIndatatable')).toEqual(true);
+        // expect(hasError(sm, err_noDataTableInDataTable, 'datatableNoFields')).toEqual(false);
+    })
+
+    it('datatable with no fields', () => {
+        expect(hasError(sm, err_noDataTableNoField, 'datatable2')).toEqual(false);
     })
 
 

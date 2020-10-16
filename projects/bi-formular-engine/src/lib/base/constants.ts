@@ -13,6 +13,8 @@ export const err_OptionsArray = 'options Property must be an array';
 export const err_zeroOptions = 'options Property is empty';
 export const err_wrongOptions = 'options Property is in the wrong format (either array of strings or array of {value, text} objects)';
 export const err_OptionsDoubleValues = 'options Property has duplicate values';
+export const err_noDataTableInDataTable = 'Nested Data-Table in Data-Table is not supported';
+export const err_noDataTableNoField = 'Data-Table must have fields';
 
 export const err_noIcon = 'icon Property is necessary';
 export const err_unn = prop => `Unnecessary Property "${prop}"`;

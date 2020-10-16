@@ -171,6 +171,45 @@ export const schemaErr: ISchema = {
 
             ]
         },
+        {
+            type: 'datatable',
+            name: 'datatableIndatatable',
+            children: [
+                {
+                    type: 'datatable',
+                    name: 'datatableNoFields',
+                    children: [
+                        {
+                            type: 'button',
+                            label: 'Lb',
+                        }
+                    ]
+                },
+                {
+                    type: 'input',
+                    field: 'dtInp1'
+                }
+            ]
+        },
+        {
+            type: 'datatable',
+            name: 'datatable2',
+            children: [
+                {
+                    type: 'panel',
+                    children: [
+                        {
+                            type: 'input',
+                            field: 'dtInp1'
+                        }
+        
+                    ]
+
+                },
+            ]
+        }
+
+
 
     ]
 }

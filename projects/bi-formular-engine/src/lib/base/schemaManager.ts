@@ -1,6 +1,6 @@
 import { strings } from './strings';
 import { ISchema, IComponent, ComponentType, ISelectOptionItems, DataType, IScreenSize, IAppearance, SchemaKeys, ComponentKeys } from './types';
-import { err_schema, err_notype, err_typewrong, err_noChild, err_zeroChild, err_noField, err_noLabel, err_doubleField, err_doubleName, err_noSummary, err_noOptions, err_OptionsArray, err_zeroOptions, err_wrongOptions, err_OptionsDoubleValues, err_noIcon, err_unn } from './constants'
+import { err_schema, err_notype, err_typewrong, err_noChild, err_zeroChild, err_noField, err_noLabel, err_doubleField, err_doubleName, err_noSummary, err_noOptions, err_OptionsArray, err_zeroOptions, err_wrongOptions, err_OptionsDoubleValues, err_noIcon, err_noDataTableInDataTable, err_noDataTableNoField, err_unn } from './constants'
 import { Subject } from 'rxjs';
 import cloneDeep from 'lodash.clonedeep';
 import merge from 'lodash.merge';
@@ -402,9 +402,8 @@ export class SchemaManager {
   }
 
   validate(comp: IComponent, value: any, arrayInd: number = -1): void {
-    
-    if (arrayInd === -1 && this.fieldIsInDataTable(comp))
-    {
+
+    if (arrayInd === -1 && this.fieldIsInDataTable(comp)) {
       const pd = this.getParentDataTable(comp)
       arrayInd = pd.curRowInd;
     }
@@ -471,7 +470,7 @@ export class SchemaManager {
 
   getError(comp: IComponent) {
     const pd = this.getParentDataTable(comp)
-  
+
     const arrayInd = pd && pd.curRowInd ? pd.curRowInd : -1;
     const error = this.Errors.find(e => e.comp === comp && e.arrayInd === arrayInd);
     return error ? error.error : '';
@@ -568,9 +567,9 @@ export class SchemaManager {
       }
       valuesAlreadySeen.push(value)
     }
-    return false    
+    return false
 
-  } 
+  }
 
   DoFocus(comp: IComponent, arrayInd: number = -1) {
     const ok = this.MakeVisible(comp, arrayInd);
@@ -749,7 +748,17 @@ export class SchemaManager {
             }
           }
         }
-        if (c.type === ComponentType.datatable && c.cardView && !c.summaryCard) AddErr(c, err_noSummary, true);
+        if (c.type === ComponentType.datatable) {
+          if (c.cardView && !c.summaryCard) AddErr(c, err_noSummary, true);
+          let hasField = false;
+          let DtInDt = false;
+          this.traverseSchema((f) => {
+            if (f.field) hasField = true
+            if (f.type === 'datatable') DtInDt = true 
+          }, null, c)
+          if (!hasField) AddErr(c, err_noDataTableNoField, true);
+          if (DtInDt) AddErr(c, err_noDataTableInDataTable, true);
+        }
         if ((c.type === ComponentType.icon) && !c.icon) AddErr(c, err_noIcon, true);
       }
 
