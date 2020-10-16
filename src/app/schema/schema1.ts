@@ -7,6 +7,7 @@ export const schema1: ISchema = {
         {
             type: 'input',
             label: 'Div',
+            unbound: true,
             field: 'Erstes Feld',
             required: true,
            

@@ -72,72 +72,74 @@ const InitStandardWidth = (sm: SchemaManager) => {
 
 
 
-const InitSidenav = (sm: SchemaManager) => {
-    let menuitems: IComponent[] = [];
-    sm.getCompByName('sidenav').children.forEach(c => {
-        if (c.children) {
-            menuitems.push({
-                type: 'button',
-                label: c.label,
-                style: 'font-weight: 200;',
-                name: 'm_' + c.name,
-                onClick(sm, comp) {
-                    scrollToPanel(sm, comp);
-                }
-            });
-        }
-    });
-    sm.getCompByName('sidenav').menu = menuitems;
-    scrollToPanel(sm, menuitems[0]);
-}
+// const InitSidenav = (sm: SchemaManager) => {
+//     let menuitems: IComponent[] = [];
+//     sm.getCompByName('sidenav').children.forEach(c => {
+//         if (c.children) {
+//             menuitems.push({
+//                 type: 'button',
+//                 label: c.label,
+//                 style: 'font-weight: 200;',
+//                 name: 'm_' + c.name,
+//                 onClick(sm, comp) {
+//                     scrollToPanel(sm, comp);
+//                 }
+//             });
+//         }
+//     });
+//     sm.getCompByName('sidenav').menu = menuitems;
+//     scrollToPanel(sm, menuitems[0]);
+// }
 
-const scrollToPanel = (sm: SchemaManager, comp: IComponent) => {
-    const pnName = comp.name.substring(2);
-    const sn = sm.getCompByName('sidenav');
-    sn.menu.forEach(c => {
-        c.color = '';
-        c.style = 'font-weight: 200;';
-    });
-    comp.color = 'primary';
-    comp.style = 'font-weight: 500;';
+// const scrollToPanel = (sm: SchemaManager, comp: IComponent) => {
+//     const pnName = comp.name.substring(2);
+//     const sn = sm.getCompByName('sidenav');
+//     sn.menu.forEach(c => {
+//         c.color = '';
+//         c.style = 'font-weight: 200;';
+//     });
+//     comp.color = 'primary';
+//     comp.style = 'font-weight: 500;';
 
-    const pn = sm.getCompByName(pnName);
-    if (pn && pn.type === 'expansionspanel') {
-        const c = pn.children[0];
-        if (c) {
-            c.expanded = true;
-            sm.DoFocus(c);
-        }
-    } else {
-        sm.DoFocus(pn);
-    }
+//     const pn = sm.getCompByName(pnName);
+//     if (pn && pn.type === 'expansionspanel') {
+//         const c = pn.children[0];
+//         if (c) {
+//             c.expanded = true;
+//             sm.DoFocus(c);
+//         }
+//     } else {
+//         sm.DoFocus(pn);
+//     }
 
-}
-
+// }
 
 
 export const schema_IA: ISchema =
 {
     onInitSchema(sm) {
         InitStandardWidth(sm);
-        InitSidenav(sm);
+        // InitSidenav(sm);
         sm.Schema.appearance = 'outline';
     },
     onMakeVisible(sm, comp) {
-        if (comp.type === ComponentType.card && comp.hidden && comp.name) {
-            const menu = sm.getCompByName('m_' + comp.name);
-            if (menu) {
-                scrollToPanel(sm, menu);
-            }
-        }
+        // if (comp.type === ComponentType.card && comp.hidden && comp.name) {
+        //     const menu = sm.getCompByName('m_' + comp.name);
+        //     if (menu) {
+        //         scrollToPanel(sm, menu);
+        //     }
+        // }
     },
-    type: 'sidenav',
-    style: 'min-height: 800px',
+    type: 'panel',
+    style: 'display: flex; align-items: center; justify-content: center;',
     label: 'Installationsanzeige',
-    navpos: 'right',
     menu: [],
-    name: 'sidenav',
     children: [
+        {
+            type: 'label',
+            style: 'font-weight: 600; text-align: center; margin-top: 10px; margin-bottom: 10px',
+            label: 'Installationsanzeige'
+        },
         {
             type: 'expansionspanel',
             label: 'Ort der Installation',

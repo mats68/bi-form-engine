@@ -11,11 +11,17 @@ export class AppComponent {
   title = 'app';
   schema =  schema1;
   values = values1;
+  ShowValues = false
 
   getValues() {
     return JSON.stringify(this.values, null, 2);
 
   }  
+
+  showValues() {
+    this.ShowValues = !this.ShowValues
+
+  }
 
 
 }

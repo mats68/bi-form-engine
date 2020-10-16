@@ -1,6 +1,9 @@
-Werte: 
-<div>
-    {{getValues()}}
-</div>
-
 <bi-form [schema]='schema' [values]='values'></bi-form>
+
+<hr style="margin-top: 50px;" />
+
+<button (click)="showValues()">Show Values</button>
+
+<div *ngIf='ShowValues'>
+    <pre><code>{{getValues()}}</code></pre>
+</div>
