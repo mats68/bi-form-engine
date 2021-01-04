@@ -1,4 +1,4 @@
-import { SchemaManager, IComponent, ISchema, ComponentType, ButtonKind, Color } from 'bi-formular-engine';
+import { SchemaManager, IComponent, ISchema, ComponentType, ButtonKind, Color } from '@next-gen/formular-engine';
 
 export const buttons: Array<IComponent> = [
 {

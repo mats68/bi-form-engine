@@ -1,4 +1,4 @@
-import { SchemaManager, ComponentType, IComponent, ISchema } from 'bi-formular-engine';
+import { SchemaManager, ComponentType, IComponent, ISchema } from '@next-gen/formular-engine';
 //import { buttons } from './schemaButtons';
 
 const adress = (PrefField: string, disabled: boolean = false): Array<IComponent> => [

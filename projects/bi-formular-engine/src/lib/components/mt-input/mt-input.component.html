@@ -1,5 +1,5 @@
 <mat-form-field [style]='style' [appearance]='sm.getAppearance(comp)' [class]='getClass("form-field")'>
-  <mat-label [ngClass]='{"error-color" : getError()}'>{{label}}</mat-label>
+  <mat-label *ngIf='label' [ngClass]='{"error-color" : getError()}'>{{label}}</mat-label>
   <span matPrefix *ngIf='comp.prefix'>{{comp.prefix}}</span>
   <input *ngIf='Typ === inpTyp.normal'
     matInput #name [(ngModel)]='Value' (blur)='onBlur()'

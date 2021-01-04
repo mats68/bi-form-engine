@@ -1,16 +1,30 @@
-import { SchemaManager, ComponentType, IComponent, ISchema } from 'bi-formular-engine';
+import { SchemaManager, ComponentType, IComponent, ISchema } from '@next-gen/formular-engine';
 
 export const schema1: ISchema = {
     type: 'form',
     label: 'Formular',
     children: [
         {
+            type: 'label',
+            label: 'Alter des Geräts',
+            cols: 'xs-2'
+        },
+        {
+            type: 'radiogroup',
+            field: 'radiogroup',
+            options: ['Neuanlage', 'Erweiterung'],
+            cols: 'xs-4'
+        },
+        {
+            type: 'label',
+            label: 'Art des Geräts / Anlage',
+            cols: 'xs-2'
+        },
+        {
             type: 'input',
-            label: 'Div',
-            unbound: true,
-            field: 'Erstes Feld',
-            required: true,
-           
+            field: 'ErstesFeld',
+            label: '',
+            cols: 'xs-4'
         },
         {
             type: 'datatable',

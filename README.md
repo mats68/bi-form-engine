@@ -11,6 +11,14 @@
 - `npm run test-lib`
   run tests
 
+- Package linken:
+  - `cd dist` 
+  - `npm link` 
+  - `cd ..` 
+  - `npm link @next-gen/formular-engine` 
+
+
+
 
 ## npm package publish
 - vorher builden   

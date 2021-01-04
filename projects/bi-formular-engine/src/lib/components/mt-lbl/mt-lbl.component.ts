@@ -11,4 +11,6 @@ export class MtLblComponent extends MtBaseComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
+
 }
