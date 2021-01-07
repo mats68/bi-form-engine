@@ -14,7 +14,7 @@ export class BiFormComponent implements OnInit, OnChanges {
   @Input() schema: ISchema;
   @Input() values: any;
   @Input() settings: ISettings;
-  schemaManger: SchemaManager;
+  @Input() schemaManger: SchemaManager;
 
   constructor() { 
 
