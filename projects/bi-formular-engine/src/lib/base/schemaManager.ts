@@ -80,6 +80,7 @@ export class SchemaManager {
   AllValidated: boolean;
 
   OnFocus: Subject<IComponent>;
+  OnChange: Subject<IComponent>;
 
   private _AllDisabled: boolean;
   get AllDisabled(): boolean {
@@ -121,6 +122,7 @@ export class SchemaManager {
     this.InitSettings(settings);
     this.InitScreenSize();
     this.OnFocus = new Subject<IComponent>();
+    this.OnChange = new Subject<IComponent>();
   }
 
   InitSchema(schema: ISchema) {
@@ -394,6 +396,8 @@ export class SchemaManager {
 
     if (this.Schema.onChange) {
       this.Schema.onChange(this, comp, val);
+      setTimeout(() => this.OnChange.next(comp), 100);
+
     }
 
     this.InitDiffHighlightComp(comp, arrayInd);

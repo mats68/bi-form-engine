@@ -1,20 +1,9 @@
 import { SchemaManager, ComponentType, IComponent, ISchema } from '@next-gen/formular-engine';
 
 export const schema1: ISchema = {
-    type: 'form',
+    type: 'panel',
     label: 'Formular',
     children: [
-        {
-            type: 'label',
-            label: 'Alter des Geräts',
-            cols: 'xs-2'
-        },
-        {
-            type: 'radiogroup',
-            field: 'radiogroup',
-            options: ['Neuanlage', 'Erweiterung'],
-            cols: 'xs-4'
-        },
         {
             type: 'label',
             label: 'Art des Geräts / Anlage',
@@ -23,9 +12,38 @@ export const schema1: ISchema = {
         {
             type: 'input',
             field: 'ErstesFeld',
+            appearance: 'outline',
             label: '',
             cols: 'xs-4'
         },
+        {
+            type: 'panel',
+            cols: 'xs-10'
+        },
+        {
+            type: 'label',
+            label: 'Art des alters',
+            cols: 'xs-2'
+        },
+        {
+            type: 'input',
+            field: 'ErstesFeld',
+            appearance: 'outline',
+            label: 'PLZ',
+            cols: 'xs-2'
+        },
+        {
+            type: 'input',
+            field: 'ErstesFeld',
+            appearance: 'outline',
+            label: '',
+            cols: 'xs-4'
+        },
+        {
+            type: 'panel',
+            cols: 'xs-10'
+        },
+
         {
             type: 'datatable',
             field: 'table1',

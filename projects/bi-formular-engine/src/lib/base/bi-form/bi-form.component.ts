@@ -14,7 +14,7 @@ export class BiFormComponent implements OnInit, OnChanges {
   @Input() schema: ISchema;
   @Input() values: any;
   @Input() settings: ISettings;
-  @Input() schemaManger: SchemaManager;
+  @Input() schemaManager: SchemaManager;
 
   constructor() { 
 
@@ -24,24 +24,24 @@ export class BiFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    if (!this.schemaManger) {
-      this.schemaManger = new SchemaManager(this.settings);
+    if (!this.schemaManager) {
+      this.schemaManager = new SchemaManager(this.settings);
     }
     if (!this.schema.name) {
       this.schema.name = Math.random().toString(36).substr(2, 5);
     }
 
-    if (!this.schemaManger.Schema || this.schema.name !== this.schemaManger.Schema.name) {
-      this.schemaManger.InitSchema(this.schema);
-      if (this.values) this.schemaManger.InitValues(this.values);
-    } else if (this.values !== this.schemaManger.Values) {
-      this.schemaManger.InitValues(this.values);
+    if (!this.schemaManager.Schema || this.schema.name !== this.schemaManager.Schema.name) {
+      this.schemaManager.InitSchema(this.schema);
+      if (this.values) this.schemaManager.InitValues(this.values);
+    } else if (this.values !== this.schemaManager.Values) {
+      this.schemaManager.InitValues(this.values);
     }
  
   }
 
   onResize(event){
-    this.schemaManger.InitScreenSize();
+    this.schemaManager.InitScreenSize();
   }
 
 
