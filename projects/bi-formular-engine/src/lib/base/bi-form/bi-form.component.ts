@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { ISchema } from '../../base/types';
 import { SchemaManager, ISettings } from '../../base/schemaManager';
 
@@ -6,7 +6,7 @@ import { SchemaManager, ISettings } from '../../base/schemaManager';
   selector: 'bi-form',
   templateUrl: './bi-form.component.html',
   styleUrls: ['./bi-form.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
   host: {
     '(window:resize)': 'onResize($event)'
   }})

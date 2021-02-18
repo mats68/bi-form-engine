@@ -12,21 +12,21 @@ export class BiDiffComponent implements OnInit {
   @Input() values1: any;
   @Input() values2: any;
   @Input() settings: ISettings;
-  schemaManger1: SchemaManager;
-  schemaManger2: SchemaManager;
+  schemaManager1: SchemaManager;
+  schemaManager2: SchemaManager;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.schemaManger1 = new SchemaManager(this.settings);
-    this.schemaManger2 = new SchemaManager(this.settings);
+    this.schemaManager1 = new SchemaManager(this.settings);
+    this.schemaManager2 = new SchemaManager(this.settings);
 
-    this.schemaManger1.InitSchema(this.schema);
-    this.schemaManger2.InitSchema(this.schema);
-    this.schemaManger1.InitValues(this.values1, this.values2);
-    this.schemaManger2.InitValues(this.values2);
-    this.schemaManger2.DisableAll();
-    this.schemaManger1.InitDiffHighlight();
+    this.schemaManager1.InitSchema(this.schema);
+    this.schemaManager2.InitSchema(this.schema);
+    this.schemaManager1.InitValues(this.values1, this.values2);
+    this.schemaManager2.InitValues(this.values2);
+    this.schemaManager2.DisableAll();
+    this.schemaManager1.InitDiffHighlight();
   }
 
 

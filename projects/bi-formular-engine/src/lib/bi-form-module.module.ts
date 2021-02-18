@@ -31,6 +31,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 import { MtInputComponent } from './components/mt-input/mt-input.component';
+import { MtInputRawComponent } from './components/mt-input-raw/mt-input-raw.component';
 import { MtCheckboxComponent } from './components/mt-checkbox/mt-checkbox.component';
 import { MtItemComponent } from './base/mt-item/mt-item.component';
 import { MtFormComponent } from './components/mt-form/mt-form.component';
@@ -62,6 +63,7 @@ import { BiFormComponent } from './base/bi-form/bi-form.component';
 @NgModule({
   declarations: [
     MtInputComponent,
+    MtInputRawComponent,
     MtCheckboxComponent,
     MtItemComponent,
     MtFormComponent,

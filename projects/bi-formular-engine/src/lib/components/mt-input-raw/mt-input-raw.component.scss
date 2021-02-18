@@ -1,0 +1,61 @@
+.form-field {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+}
+.width-100 {
+    width: 100%;
+}
+
+.border-none,
+.border-none:focus,
+.border-none:active {
+    border: none;
+}
+
+.border-bottom {
+    border-bottom: 2px solid #E0E3E7;
+}
+
+.border-bottom:hover,
+.border-bottom:focus {
+    border-bottom: 2px solid #419B86;
+}
+
+
+.bg-white,
+.bg-white:active {
+    background-color: white;
+}
+
+.bg-white:focus,
+.bg-white:focus-within {
+    background-color: #96F2D7;
+}
+
+.font-bolder:hover,
+.font-bolder:focus {
+    font-weight: bolder;
+}
+
+.font-bolder:focus {
+    font-weight: bolder;
+}
+
+// input:-webkit-autofill,
+// input:-webkit-autofill:hover,
+// input:-webkit-autofill:focus,
+// input:-webkit-autofill:active {
+//     transition: background-color 5000s ease-in-out 0s;
+// }
+
+/* Change the white to any color ;) */
+.bg-white:-webkit-autofill {
+    box-shadow: 0 0 0 30px white inset !important;
+}
+
+.bg-white:-webkit-autofill:hover, 
+.bg-white:-webkit-autofill:focus, 
+.bg-white:-webkit-autofill:active  {
+    box-shadow: 0 0 0 30px #96F2D7 inset !important;
+}
