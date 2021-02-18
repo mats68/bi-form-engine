@@ -1,4 +1,9 @@
 .form-field {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.input-padding {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 5px;
@@ -8,9 +13,19 @@
 }
 
 .border-none,
-.border-none:focus,
-.border-none:active {
-    border: none;
+.border-none:hover,
+.border-none:active,
+.border-none:focus {
+  border-style: none;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+
+.align-center {
+    align-items: center;
 }
 
 .border-bottom {
@@ -21,7 +36,6 @@
 .border-bottom:focus {
     border-bottom: 2px solid #419B86;
 }
-
 
 .bg-white,
 .bg-white:active {
@@ -42,14 +56,6 @@
     font-weight: bolder;
 }
 
-// input:-webkit-autofill,
-// input:-webkit-autofill:hover,
-// input:-webkit-autofill:focus,
-// input:-webkit-autofill:active {
-//     transition: background-color 5000s ease-in-out 0s;
-// }
-
-/* Change the white to any color ;) */
 .bg-white:-webkit-autofill {
     box-shadow: 0 0 0 30px white inset !important;
 }

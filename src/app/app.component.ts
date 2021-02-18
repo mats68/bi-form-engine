@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import {schema_IA, values_IA } from './schema/schema_IA';
-import {schema1, values1 } from './schema/schema1';
-import { SchemaManager } from 'dist/bi-formular-engine/public-api';
-subscriptionFocus: Subscription;
+// import {schema_IA, values_IA } from './schema/schema_IA';
+import {schema1, values1 } from './schema/schema2';
+import { SchemaManager } from 'dist/bi-formular-engine';
 
 @Component({
   selector: 'app-root',
@@ -25,12 +24,7 @@ export class AppComponent {
     this.ShowValues = !this.ShowValues
   }
 
-  this.subscriptionChange =  this.sm.onChange.subscribe({
-    next: (comp) => {
-
-    }
-  });
-
+  
 
 
 }
