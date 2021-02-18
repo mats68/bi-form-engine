@@ -1,9 +1,13 @@
-<bi-form [schemaManager]='sm' [schema]='schema' [values]='values'></bi-form>
+<div style="width: 500px; margin: 20px;">
+  <bi-form [schemaManager]='sm' [schema]='schema' [values]='values'></bi-form>
+</div>
 
 <hr style="margin-top: 50px;" />
 
 <button (click)="showValues()">Show Values</button>
 
-<div *ngIf='ShowValues'>
-    <pre><code>{{getValues()}}</code></pre>
+<div>
+    <div *ngIf='ShowValues'>
+        <pre><code>{{getValues()}}</code></pre>
+    </div>
 </div>
